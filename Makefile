@@ -103,6 +103,8 @@ ASM_PROC_FLAGS  := --input-enc=utf-8 --output-enc=euc-jp --convert-statics=globa
 
 SPLAT           ?= tools/splat/split.py
 SPLAT_YAML      ?= $(TARGET).$(VERSION).yaml
+FADO            ?= tools/fado/fado.elf
+RELOC_PREREQ    ?= tools/reloc_prerequisites.py
 
 
 
@@ -178,6 +180,9 @@ O_FILES       := $(foreach f,$(C_FILES:.c=.o),$(BUILD_DIR)/$f) \
                  $(foreach f,$(S_FILES:.s=.o),$(BUILD_DIR)/$f) \
                  $(foreach f,$(BIN_FILES:.bin=.o),$(BUILD_DIR)/$f)
 
+RELOC_LIST    := $(BUILD_DIR)/src/overlays/relocs_o.txt
+RELOC_O_FILES := $(shell cat $(RELOC_LIST))
+
 LIBULTRA_DIRS := $(shell find lib/ultralib/src -type d \
                   -not -path "lib/ultralib/src/audio" \
                   -not -path "lib/ultralib/src/error" \
@@ -198,7 +203,8 @@ LIBULTRA_O    := $(foreach f,$(LIBULTRA_C:.c=.o),$(BUILD_DIR)/$f) \
 
 # Automatic dependency files
 DEP_FILES := $(O_FILES:.o=.d) \
-             $(O_FILES:.o=.asmproc.d)
+             $(O_FILES:.o=.asmproc.d) \
+			 $(RELOC_O_FILES:.o=.d)
 
 # create build directories
 $(shell mkdir -p $(BUILD_DIR)/linker_scripts/$(VERSION) $(BUILD_DIR)/linker_scripts/$(VERSION)/auto $(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS),$(BUILD_DIR)/$(dir)))
@@ -211,6 +217,16 @@ build/src/boot/O2/%.o: OPTFLAGS := -O2
 
 # cc & asm-processor
 build/src/%.o: CC := $(ASM_PROC) $(ASM_PROC_FLAGS) $(CC) -- $(AS) $(ASFLAGS) --
+
+
+## Order-only prerequisites 
+# These ensure e.g. the O_FILES are built before the RELOC_O_FILES.
+# The intermediate phony targets avoid quadratically-many dependencies between the targets and prerequisites.
+
+o_files: $(O_FILES)
+$(RELOC_O_FILES): | o_files
+
+.PHONY: o_files
 
 
 #### Main Targets ###
@@ -248,6 +264,7 @@ setup:
 extract: $(SPLAT_YAML)
 	$(RM) -r asm/$(VERSION) bin/$(VERSION)
 	$(SPLAT) $(SPLAT_YAML)
+	make $(RELOC_LIST)
 
 lib:
 	$(MAKE) -C lib
@@ -281,7 +298,7 @@ $(ROMC): $(ROM) $(SPLAT_YAML)
 	python3 tools/z64compress_wrapper.py $(COMPFLAGS) $< $@ $(ELF) $(SPLAT_YAML)
 
 # TODO: avoid using auto/undefined
-$(ELF): $(LIBULTRA_O) $(O_FILES) $(LD_SCRIPT) $(BUILD_DIR)/linker_scripts/$(VERSION)/hardware_regs.ld $(BUILD_DIR)/linker_scripts/$(VERSION)/undefined_syms.ld $(BUILD_DIR)/linker_scripts/common_undef_syms.ld $(BUILD_DIR)/linker_scripts/$(VERSION)/auto/undefined_syms_auto.ld $(BUILD_DIR)/linker_scripts/$(VERSION)/auto/undefined_funcs_auto.ld
+$(ELF): $(LIBULTRA_O) $(O_FILES) $(RELOC_O_FILES) $(LD_SCRIPT) $(BUILD_DIR)/linker_scripts/$(VERSION)/hardware_regs.ld $(BUILD_DIR)/linker_scripts/$(VERSION)/undefined_syms.ld $(BUILD_DIR)/linker_scripts/common_undef_syms.ld $(BUILD_DIR)/linker_scripts/$(VERSION)/auto/undefined_syms_auto.ld $(BUILD_DIR)/linker_scripts/$(VERSION)/auto/undefined_funcs_auto.ld
 	$(LD) $(LDFLAGS) -T $(LD_SCRIPT) \
 		-T $(BUILD_DIR)/linker_scripts/$(VERSION)/hardware_regs.ld -T $(BUILD_DIR)/linker_scripts/$(VERSION)/undefined_syms.ld -T $(BUILD_DIR)/linker_scripts/common_undef_syms.ld \
 		-T $(BUILD_DIR)/linker_scripts/$(VERSION)/auto/undefined_syms_auto.ld -T $(BUILD_DIR)/linker_scripts/$(VERSION)/auto/undefined_funcs_auto.ld \
@@ -292,6 +309,9 @@ $(BUILD_DIR)/%.ld: %.ld
 
 $(BUILD_DIR)/%.o: %.bin
 	$(OBJCOPY) -I binary -O elf32-big $< $@
+
+$(SPLAT_YAML):
+	$(CAT) yamls/$(VERSION)/header.yaml yamls/$(VERSION)/makerom.yaml yamls/$(VERSION)/boot.yaml yamls/$(VERSION)/code.yaml yamls/$(VERSION)/overlays.yaml yamls/$(VERSION)/assets.yaml > $(SPLAT_YAML)
 
 $(BUILD_DIR)/%.o: %.s
 	$(CPP) $(CPPFLAGS) $(BUILD_DEFINES) $(IINC) -I $(dir $*) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(AS_DEFINES) $< | $(ICONV) $(ICONV_FLAGS) | $(AS) $(ASFLAGS) $(ENDIAN) $(IINC) -I $(dir $*) -o $@
@@ -308,8 +328,15 @@ ifneq ($(PERMUTER), 1)
 	$(error Library files has not been built, please run `$(MAKE) lib` first)
 endif
 
-$(SPLAT_YAML): yamls/$(VERSION)/*.yaml
+$(SPLAT_YAML):
 	$(CAT) yamls/$(VERSION)/header.yaml yamls/$(VERSION)/makerom.yaml yamls/$(VERSION)/boot.yaml yamls/$(VERSION)/code.yaml yamls/$(VERSION)/overlays.yaml yamls/$(VERSION)/assets.yaml > $(SPLAT_YAML)
+
+$(RELOC_LIST): $(SPLAT_YAML)
+	$(RELOC_PREREQ) $(SPLAT_YAML) $(RELOC_LIST)
+
+build/src/overlays/%_reloc.o: | $(RELOC_LIST)
+	$(FADO) -n $(notdir $*) -o $(@:.o=.s) $^
+	$(AS) $(ASFLAGS) $(@:.o=.s) -o $@
 
 -include $(DEP_FILES)
 

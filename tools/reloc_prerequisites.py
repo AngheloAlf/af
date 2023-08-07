@@ -23,12 +23,12 @@ def printVerbose(*args, **kwargs):
 
 
 @dataclasses.dataclass
-class Segment:
+class OverlaySegment:
     name: str
     relocPath: Path # without extension
     files: list[Path]
 
-def getOverlays(yamlPath: Path) -> list[Segment]:
+def getOverlays(yamlPath: Path) -> list[OverlaySegment]:
     printVerbose("Parsing yaml...")
 
     with yamlPath.open("r") as f:
@@ -40,10 +40,10 @@ def getOverlays(yamlPath: Path) -> list[Segment]:
 
     buildPath = Path(options.get("build_path", "build"))
     asmPath = Path(options.get("asm_path", "asm"))
-    dataPath = Path(options.get("asm_path", "data"))
+    dataPath = Path(options.get("data_path", "data"))
     srcPath = Path(options.get("src_path", "src"))
 
-    overlays: list[Segment] = []
+    overlays: list[OverlaySegment] = []
 
     prevSeg = yamlObj["segments"][0]
     for segment in yamlObj["segments"][1:]:
@@ -97,26 +97,15 @@ def getOverlays(yamlPath: Path) -> list[Segment]:
 
             relocPath = buildPath / srcPath / relocpath
             print(relocPath)
-            overlayInfo = Segment(name, relocPath, files)
+            overlayInfo = OverlaySegment(name, relocPath, files)
             overlays.append(overlayInfo)
 
         prevSeg = segment
 
     return overlays
 
-def main():
-    # Args from command line
-    parser = argparse.ArgumentParser(description="")
-
-    parser.add_argument("yaml", help="Path to the yaml file", type=Path)
-    parser.add_argument("o_list_path", help="Path to write the list of reloc .o files", type=Path)
-
-    args = parser.parse_args()
-
-    yamlPath: Path = args.yaml
-    oListPath: Path = args.o_list_path
-
-    overlays = getOverlays(yamlPath)
+def writePrerequisites(overlays: list[OverlaySegment], oListPath: Path):
+    printVerbose("Writing prerequisites...")
 
     with oListPath.open("w") as f:
         for ovl in overlays:
@@ -134,6 +123,22 @@ def main():
                 for ovlFile in ovl.files:
                     relocDFile.write(f"{ovlFile}:\n")
             f.write(f"{relocO}\n")
+
+def main():
+    # Args from command line
+    parser = argparse.ArgumentParser(description="")
+
+    parser.add_argument("yaml", help="Path to the yaml file", type=Path)
+    parser.add_argument("o_list_path", help="Path to write the list of reloc .o files", type=Path)
+
+    args = parser.parse_args()
+
+    yamlPath: Path = args.yaml
+    oListPath: Path = args.o_list_path
+
+    overlays = getOverlays(yamlPath)
+
+    writePrerequisites(overlays, oListPath)
 
     return 0
 
