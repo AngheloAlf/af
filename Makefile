@@ -245,9 +245,8 @@ setup:
 	$(MAKE) -C tools
 	python3 tools/decompress_baserom.py
 
-extract:
+extract: $(SPLAT_YAML)
 	$(RM) -r asm/$(VERSION) bin/$(VERSION)
-	$(CAT) yamls/$(VERSION)/header.yaml yamls/$(VERSION)/makerom.yaml yamls/$(VERSION)/boot.yaml yamls/$(VERSION)/code.yaml yamls/$(VERSION)/overlays.yaml yamls/$(VERSION)/assets.yaml > $(SPLAT_YAML)
 	$(SPLAT) $(SPLAT_YAML)
 
 lib:
@@ -278,7 +277,7 @@ $(ROM): $(ELF)
 	$(OBJCOPY) -O binary --pad-to=0x1914000 --gap-fill=0x00 $< $@
 # TODO: update rom header checksum
 
-$(ROMC): $(ROM)
+$(ROMC): $(ROM) $(SPLAT_YAML)
 	python3 tools/z64compress_wrapper.py $(COMPFLAGS) $< $@ $(ELF) $(SPLAT_YAML)
 
 # TODO: avoid using auto/undefined
@@ -308,6 +307,9 @@ $(BUILD_DIR)/lib/%.o:
 ifneq ($(PERMUTER), 1)
 	$(error Library files has not been built, please run `$(MAKE) lib` first)
 endif
+
+$(SPLAT_YAML): yamls/$(VERSION)/*.yaml
+	$(CAT) yamls/$(VERSION)/header.yaml yamls/$(VERSION)/makerom.yaml yamls/$(VERSION)/boot.yaml yamls/$(VERSION)/code.yaml yamls/$(VERSION)/overlays.yaml yamls/$(VERSION)/assets.yaml > $(SPLAT_YAML)
 
 -include $(DEP_FILES)
 

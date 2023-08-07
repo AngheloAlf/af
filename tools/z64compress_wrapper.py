@@ -21,18 +21,21 @@ def printVerbose(*args, **kwargs):
     print(*args, **kwargs)
 
 
-def ranges(i):
+def ranges(i: list[int]):
     for _, b in itertools.groupby(enumerate(i), lambda pair: pair[1] - pair[0]):
         b = list(b)
         yield b[0][1], b[-1][1]
 
 
-def getCompressedSegmentIndices(yamlPath: Path):
-    printVerbose("Finding compressed segments...")
-    with yamlPath.open() as f:
+def getCompressedSegmentIndices(yamlPath: Path) -> list[tuple[int, int]]:
+    printVerbose("Parsing yaml...")
+
+    with yamlPath.open("r") as f:
         yamlObj = yaml.load(f, Loader=yaml.SafeLoader)
 
-    indices = []
+    printVerbose("Finding compressed segments...")
+
+    indices: list[int] = []
     currentIndex = 0
     for segment in yamlObj["segments"]:
         if not isinstance(segment, dict):
