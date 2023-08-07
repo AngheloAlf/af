@@ -140,7 +140,6 @@
       - [0x7339F0, data, code/sys_ucode]
       - [0x733A00, data, code/m_nmi_buff]
       - [0x733A10, data, code/733A10]
-      
 
       - [0x739DB0, .rodata, code/c_keyframe]
       - [0x739E00, rodata, code/739E00]

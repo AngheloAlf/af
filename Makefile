@@ -310,9 +310,6 @@ $(BUILD_DIR)/%.ld: %.ld
 $(BUILD_DIR)/%.o: %.bin
 	$(OBJCOPY) -I binary -O elf32-big $< $@
 
-$(SPLAT_YAML):
-	$(CAT) yamls/$(VERSION)/header.yaml yamls/$(VERSION)/makerom.yaml yamls/$(VERSION)/boot.yaml yamls/$(VERSION)/code.yaml yamls/$(VERSION)/overlays.yaml yamls/$(VERSION)/assets.yaml > $(SPLAT_YAML)
-
 $(BUILD_DIR)/%.o: %.s
 	$(CPP) $(CPPFLAGS) $(BUILD_DEFINES) $(IINC) -I $(dir $*) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(AS_DEFINES) $< | $(ICONV) $(ICONV_FLAGS) | $(AS) $(ASFLAGS) $(ENDIAN) $(IINC) -I $(dir $*) -o $@
 	$(OBJDUMP_CMD)
@@ -328,7 +325,7 @@ ifneq ($(PERMUTER), 1)
 	$(error Library files has not been built, please run `$(MAKE) lib` first)
 endif
 
-$(SPLAT_YAML):
+$(SPLAT_YAML): yamls/$(VERSION)/*.yaml
 	$(CAT) yamls/$(VERSION)/header.yaml yamls/$(VERSION)/makerom.yaml yamls/$(VERSION)/boot.yaml yamls/$(VERSION)/code.yaml yamls/$(VERSION)/overlays.yaml yamls/$(VERSION)/assets.yaml > $(SPLAT_YAML)
 
 $(RELOC_LIST): $(SPLAT_YAML)
