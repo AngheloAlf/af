@@ -335,7 +335,9 @@ $(RELOC_LIST): $(SPLAT_YAML)
 	$(RELOC_PREREQ) $(SPLAT_YAML) $(RELOC_LIST)
 
 build/src/overlays/%_reloc.o: | $(RELOC_LIST)
-	$(FADO) -n $(notdir $*) -o $(@:.o=.s) $^
+#	$(FADO) -n $(notdir $*) -o $(@:.o=.s) $^
+#   Hack to workaround fado not emitting flags for the ovl section
+	$(FADO) -n $(notdir $*) $^ | sed 's/\.section \.ovl/.section .ovl, "a"/' > $(@:.o=.s)
 	$(AS) $(ASFLAGS) $(@:.o=.s) -o $@
 
 -include $(DEP_FILES)
