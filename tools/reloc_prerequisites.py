@@ -96,7 +96,7 @@ def getOverlays(yamlPath: Path) -> list[OverlaySegment]:
                     files.append(computedPath)
 
             relocPath = buildPath / srcPath / relocpath
-            print(relocPath)
+            # print(relocPath)
             overlayInfo = OverlaySegment(name, relocPath, files)
             overlays.append(overlayInfo)
 
@@ -107,6 +107,7 @@ def getOverlays(yamlPath: Path) -> list[OverlaySegment]:
 def writePrerequisites(overlays: list[OverlaySegment], oListPath: Path):
     printVerbose("Writing prerequisites...")
 
+    oListPath.parent.mkdir(parents=True, exist_ok=True)
     with oListPath.open("w") as f:
         for ovl in overlays:
             relocO = ovl.relocPath.with_suffix(".o")

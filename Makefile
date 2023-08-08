@@ -181,7 +181,10 @@ O_FILES       := $(foreach f,$(C_FILES:.c=.o),$(BUILD_DIR)/$f) \
                  $(foreach f,$(BIN_FILES:.bin=.o),$(BUILD_DIR)/$f)
 
 RELOC_LIST    := $(BUILD_DIR)/src/overlays/relocs_o.txt
-RELOC_O_FILES := $(shell cat $(RELOC_LIST))
+# Only read file if it exists
+ifneq ($(wildcard $(RELOC_LIST)),)
+    RELOC_O_FILES := $(shell cat $(RELOC_LIST))
+endif
 
 LIBULTRA_DIRS := $(shell find lib/ultralib/src -type d \
                   -not -path "lib/ultralib/src/audio" \
