@@ -52,4 +52,6 @@ options:
   asm_emit_size_directive: False
   segment_end_before_align: True
 
+  segment_symbol_style: makerom
+
 segments:

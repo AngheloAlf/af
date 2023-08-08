@@ -7,21 +7,21 @@
 
 
 #define DECLARE_VRAM_SEGMENT(name) \
-    extern u8 name ## _VRAM[]; \
-    extern u8 name ## _VRAM_END[]
+    extern u8 _ ## name ## SegmentStart[]; \
+    extern u8 _ ## name ## SegmentEnd[]
 
 #define DECLARE_ROM_SEGMENT(name) \
-    extern u8 name ## _ROM_START[]; \
-    extern u8 name ## _ROM_END[]
+    extern u8 _ ## name ## SegmentRomStart[]; \
+    extern u8 _ ## name ## SegmentRomEnd[]
 
 #define DECLARE_DATA_SEGMENT(name)   \
-    extern u8 name ## _DATA_START[]; \
-    extern u8 name ## _DATA_END[]; \
-    extern u8 name ## _DATA_SIZE[]
+    extern u8 _ ## name ## SegmentDataStart[]; \
+    extern u8 _ ## name ## SegmentDataEnd[]; \
+    extern u8 _ ## name ## SegmentDataSize[]
 
 #define DECLARE_BSS_SEGMENT(name)   \
-    extern u8 name ## _BSS_START[]; \
-    extern u8 name ## _BSS_END[]
+    extern u8 _ ## name ## SegmentBssStart[]; \
+    extern u8 _ ## name ## SegmentBssEnd[]
 
 #define DECLARE_SEGMENT(name) \
     DECLARE_VRAM_SEGMENT(name); \
@@ -29,19 +29,19 @@
     DECLARE_DATA_SEGMENT(name); \
     DECLARE_BSS_SEGMENT(name)
 
-#define SEGMENT_VRAM_START(segment) (segment ## _VRAM)
-#define SEGMENT_VRAM_END(segment)   (segment ## _VRAM_END)
+#define SEGMENT_VRAM_START(segment) (_ ## segment ## SegmentStart)
+#define SEGMENT_VRAM_END(segment)   (_ ## segment ## SegmentEnd)
 #define SEGMENT_VRAM_SIZE(segment)  ((uintptr_t)SEGMENT_VRAM_END(segment) - (uintptr_t)SEGMENT_VRAM_START(segment))
 
-#define SEGMENT_ROM_START(segment) ((RomOffset)segment ## _ROM_START)
-#define SEGMENT_ROM_END(segment)   ((RomOffset)segment ## _ROM_END)
+#define SEGMENT_ROM_START(segment) ((RomOffset) _ ## segment ## SegmentRomStart)
+#define SEGMENT_ROM_END(segment)   ((RomOffset) _ ## segment ## SegmentRomEnd)
 #define SEGMENT_ROM_SIZE(segment)  (SEGMENT_ROM_END(segment) - SEGMENT_ROM_START(segment))
-#define SEGMENT_ROM_SIZE_ALT(segment)  ((size_t)(segment ## _ROM_END - segment ## _ROM_START))
+#define SEGMENT_ROM_SIZE_ALT(segment)  ((size_t)(_ ## segment ## SegmentRomEnd - _ ## segment ## SegmentRomStart))
 
-#define SEGMENT_DATA_SIZE_CONST(segment) ((RomOffset)segment ## _DATA_SIZE)
+#define SEGMENT_DATA_SIZE_CONST(segment) ((RomOffset) _ ## segment ## SegmentDataSize)
 
-#define SEGMENT_BSS_START(segment) (segment ## _BSS_START)
-#define SEGMENT_BSS_END(segment)   (segment ## _BSS_END)
+#define SEGMENT_BSS_START(segment) (_ ## segment ## SegmentBssStart)
+#define SEGMENT_BSS_END(segment)   (_ ## segment ## SegmentBssEnd)
 #define SEGMENT_BSS_SIZE(segment)  ((uintptr_t)SEGMENT_BSS_END(segment) - (uintptr_t)SEGMENT_BSS_START(segment))
 
 
