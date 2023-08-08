@@ -52,6 +52,9 @@ options:
   asm_emit_size_directive: False
   segment_end_before_align: True
 
-  segment_symbol_style: makerom
+  segment_symbols_style: makerom
+  section_order: [".text", ".data", ".rodata", ".ovl", ".bss"]
+  ld_section_labels: [".text", ".data", ".rodata", ".ovl", ".bss"]
+  # ld_wildcard_sections: True
 
 segments:
