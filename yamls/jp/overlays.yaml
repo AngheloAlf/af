@@ -15,7 +15,7 @@
     follows_vram: ovl__0073F4D0
     compress: True
     subsegments:
-      - [0x741A40, ovl, overlays/other_ovl/ovl__0073F4D0/ovl__0073F4D0_reloc]
+      - [0x741A40, reloc, overlays/other_ovl/ovl__0073F4D0/ovl__0073F4D0_reloc]
 
   - name: ovl__00741EA0
     type: code
@@ -33,7 +33,7 @@
     follows_vram: ovl__00741EA0
     compress: True
     subsegments:
-      - [0x741F80, .ovl, overlays/other_ovl/ovl__00741EA0/ovl__00741EA0_reloc]
+      - [0x741F80, .reloc, overlays/other_ovl/ovl__00741EA0/ovl__00741EA0_reloc]
 
   - name: ovl__00741FB0
     type: code

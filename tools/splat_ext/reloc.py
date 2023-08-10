@@ -3,13 +3,13 @@
 # SPDX-FileCopyrightText: © 2023 ZeldaRET
 # SPDX-License-Identifier: MIT
 
-from util import log, options
+from util import options
 
 from segtypes.n64.segment import N64Segment
 from segtypes.common.data import CommonSegData
 
 
-class N64SegOvl(N64Segment, CommonSegData):
+class N64SegReloc(N64Segment, CommonSegData):
     def get_linker_section(self) -> str:
         return ".ovl"
 
