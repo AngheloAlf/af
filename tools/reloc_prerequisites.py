@@ -7,10 +7,10 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
-import itertools
 from pathlib import Path
-import spimdisasm
-import subprocess
+
+# This unused import makes the yaml library faster. don't remove
+import pylibyaml
 import yaml
 
 

@@ -10,6 +10,9 @@ import itertools
 from pathlib import Path
 import spimdisasm
 import subprocess
+
+# This unused import makes the yaml library faster. don't remove
+import pylibyaml
 import yaml
 
 

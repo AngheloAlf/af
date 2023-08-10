@@ -1,3 +1,6 @@
 -r tools/splat/requirements.txt
 mapfile-parser>=1.2.1,<2.0.0
 colorama
+
+PyYAML
+pylibyaml
