@@ -104,6 +104,10 @@ class SplatOpts:
     ld_use_follows: bool
     # If enabled, the end symbol for each segment will be placed before the alignment directive for the segment
     segment_end_before_align: bool
+    # Controls the style of the auto-generated segment symbols in the linker script. Possible values: splat, makerom
+    segment_symbols_style: str
+    # Specifies the starting offset for rom address symbols in the linker script.
+    ld_rom_start: int
 
     ################################################################################
     # C file options
@@ -175,6 +179,10 @@ class SplatOpts:
     asm_generated_by: bool
     # Tells the disassembler to try disassembling functions with unknown instructions instead of falling back to disassembling as raw data
     disasm_unknown: bool
+    # Tries to detect redundant and unreferenced functions ends and merge them together. This option is ignored if the compiler is not set to IDO.
+    detect_redundant_function_end: bool
+    # Don't skip disassembling already matched functions and migrated sections
+    disassemble_all: bool
 
     ################################################################################
     # N64-specific options
@@ -289,6 +297,11 @@ def _parse_yaml(
     )
     asm_path: Path = p.parse_path(base_path, "asm_path", "asm")
 
+    asm_emit_size_directive = p.parse_optional_opt("asm_emit_size_directive", bool)
+    # If option not provided then use the compiler default
+    if asm_emit_size_directive is None:
+        asm_emit_size_directive = comp.asm_emit_size_directive
+
     def parse_endianness() -> Literal["big", "little"]:
         endianness = p.parse_opt_within(
             "endianness",
@@ -365,6 +378,10 @@ def _parse_yaml(
         ld_wildcard_sections=p.parse_opt("ld_wildcard_sections", bool, False),
         ld_use_follows=p.parse_opt("ld_use_follows", bool, True),
         segment_end_before_align=p.parse_opt("segment_end_before_align", bool, False),
+        segment_symbols_style=p.parse_opt_within(
+            "segment_symbols_style", str, ["splat", "makerom"], "splat"
+        ),
+        ld_rom_start=p.parse_opt("ld_rom_start", int, 0),
         create_c_files=p.parse_opt("create_c_files", bool, True),
         auto_decompile_empty_functions=p.parse_opt(
             "auto_decompile_empty_functions", bool, True
@@ -389,7 +406,7 @@ def _parse_yaml(
         ),
         asm_data_macro=p.parse_opt("asm_data_macro", str, comp.asm_data_macro),
         asm_end_label=p.parse_opt("asm_end_label", str, comp.asm_end_label),
-        asm_emit_size_directive=p.parse_optional_opt("asm_emit_size_directive", bool),
+        asm_emit_size_directive=asm_emit_size_directive,
         include_macro_inc=p.parse_opt(
             "include_macro_inc", bool, comp.include_macro_inc
         ),
@@ -431,6 +448,10 @@ def _parse_yaml(
         filesystem_path=p.parse_optional_path(base_path, "filesystem_path"),
         asm_generated_by=p.parse_opt("asm_generated_by", bool, True),
         disasm_unknown=p.parse_opt("disasm_unknown", bool, False),
+        detect_redundant_function_end=p.parse_opt(
+            "detect_redundant_function_end", bool, True
+        ),
+        disassemble_all=p.parse_opt("disassemble_all", bool, False),
     )
     p.check_no_unread_opts()
     return ret
