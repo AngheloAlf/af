@@ -7,9 +7,6 @@ import pickle
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 from disassembler import disassembler_instance
 from util import progress_bar
-
-# This unused import makes the yaml library faster. don't remove
-import pylibyaml  # pyright: ignore
 import yaml
 
 from colorama import Fore, Style
@@ -24,7 +21,7 @@ from segtypes.linker_entry import (
 from segtypes.segment import Segment
 from util import log, options, palettes, symbols, relocs
 
-VERSION = "0.16.7"
+VERSION = "0.16.2"
 
 parser = argparse.ArgumentParser(
     description="Split a rom given a rom, a config, and output directory"

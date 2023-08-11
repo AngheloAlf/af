@@ -22,6 +22,8 @@ CC_CHECK_COMP ?= gcc
 OBJDUMP_BUILD ?= 0
 # Number of threads to compress with
 N_THREADS ?= $(shell nproc)
+# Not meant to be used by normal users. Toggles some options to improve the use of the warning checker system
+WARNINGS_CHECK ?= 0
 
 # Set prefix to mips binutils binaries (mips-linux-gnu-ld => 'mips-linux-gnu-') - Change at your own risk!
 # In nearly all cases, not having 'mips-linux-gnu-*' binaries on the PATH is indicative of missing dependencies
@@ -108,7 +110,7 @@ RELOC_PREREQ    ?= tools/reloc_prerequisites.py
 
 
 
-IINC := -Iinclude -Ibin/$(VERSION) -I.
+IINC := -Iinclude -Isrc -Ibin/$(VERSION) -I.
 IINC += -Ilib/ultralib/include -Ilib/ultralib/include/PR
 
 ifeq ($(KEEP_MDEBUG),0)
@@ -165,9 +167,14 @@ ifeq ($(NON_MATCHING),0)
     COMPFLAGS += --matching
 endif
 
+SPLAT_FLAGS ?=
+ifneq ($(WARNINGS_CHECK), 0)
+    SPLAT_FLAGS += --stdout-only
+endif
+
 #### Files ####
 
-$(shell mkdir -p asm bin linker_scripts/$(VERSION)/auto)
+$(shell mkdir -p asm/$(VERSION) bin linker_scripts/$(VERSION)/auto)
 
 SRC_DIRS      := $(shell find src -type d)
 ASM_DIRS      := $(shell find asm/$(VERSION) -type d -not -path "asm/$(VERSION)/nonmatchings/*")
@@ -215,6 +222,10 @@ $(shell mkdir -p $(BUILD_DIR)/linker_scripts/$(VERSION) $(BUILD_DIR)/linker_scri
 
 # directory flags
 build/src/boot/O2/%.o: OPTFLAGS := -O2
+build/src/boot/libc64/%.o: OPTFLAGS := -O2
+build/src/boot/libu64/%.o: OPTFLAGS := -O2
+
+build/src/boot/libc64/%.o: OPTFLAGS := -O2
 
 # per-file flags
 
@@ -261,7 +272,7 @@ distclean: clean
 	$(MAKE) -C lib distclean
 
 setup:
-	$(MAKE) -C tools
+	$(MAKE) -C tools WARNINGS_CHECK=$(WARNINGS_CHECK)
 	python3 tools/decompress_baserom.py
 
 extract: $(SPLAT_YAML)
