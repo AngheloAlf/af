@@ -33,7 +33,7 @@
     follows_vram: ovl_first_game
     compress: True
     subsegments:
-      - [0x741F80, .reloc, overlays/gamestates/ovl_first_game/ovl_first_game_reloc]
+      - [0x741F80, reloc, overlays/gamestates/ovl_first_game/ovl_first_game_reloc]
 
   - name: ovl_play
     type: code
@@ -54,7 +54,7 @@
     follows_vram: ovl_play
     compress: True
     subsegments:
-      - [0x743950, data, overlays/gamestates/ovl_play/ovl_play_reloc]
+      - [0x743950, .reloc, overlays/gamestates/ovl_play/ovl_play_reloc]
 
   - name: ovl_second_game
     type: code
