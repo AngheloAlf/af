@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -DNDEBUG -s -Os -flto -Wall -Wextra
+CFLAGS := -DNDEBUG -s -Os -Wall -Wextra
 
 # Target platform, specify with TARGET= on the command line, linux64 is default.
 # Currently supported: linux64, linux32, win32
@@ -24,7 +24,7 @@ endif
 
 OBJ_DIR := o/$(TARGET)
 
-$(OBJ_DIR)/src/enc/%.o: CFLAGS := -DNDEBUG -s -Ofast -flto -Wall
+$(OBJ_DIR)/src/enc/%.o: CFLAGS := -DNDEBUG -s -Ofast  -Wall
 
 SRC_DIRS := $(shell find src -type d)
 C_FILES  := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))

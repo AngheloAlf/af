@@ -1,0 +1,39 @@
+  - name: boot
+    type: code
+    start: 0x1060
+    vram: 0x80025C60
+    follows_vram: makerom
+    bss_size: 0x9720
+    subsegments:
+      - [0x1060, asm]
+
+      - [0x1C490, data]
+
+      - { start: 0x21D80, type: bss, vram: 0x80046980 }
+
+
+  #   - name: dmadata
+  #     type: code
+  #     start: 0x019D40
+  #     vram: 0x80044690
+  #     follows_vram: boot
+  #     subsegments:
+  #       - [0x019D40, .data, dmadata/dmadata]
+  # 
+  #   - name: segment_027130
+  #     type: bin
+  #     start: 0x027130
+  # 
+  #   - name: segment_0E4D10
+  #     type: bin
+  #     start: 0x0E4D10
+  # 
+  #   - name: segment_13D9A0
+  #     type: bin
+  #     start: 0x13D9A0
+
+  # TODO
+  - type: bin
+    start: 0x21D80
+    follows_vram: boot
+  - [0x19A0000]

@@ -1,0 +1,59 @@
+name: Dòngwù Sēnlín (Chinese)
+sha1: 2438d7c15d93d932855621a2cb1514d776803de4
+options:
+  basename: animalforest
+  target_path: baserom_uncompressed.cn.z64
+  ld_script_path: linker_scripts/cn/animalforest.ld
+  base_path: .
+  compiler: GCC
+  find_file_boundaries: True
+  header_encoding: ASCII
+  platform: n64
+
+  undefined_funcs_auto_path: linker_scripts/cn/auto/undefined_funcs_auto.ld
+  undefined_syms_auto_path: linker_scripts/cn/auto/undefined_syms_auto.ld
+
+  symbol_addrs_path:
+    - linker_scripts/cn/symbol_addrs_boot.txt
+    - linker_scripts/cn/symbol_addrs_libultra.txt
+    - linker_scripts/cn/symbol_addrs_code.txt
+    - linker_scripts/cn/symbol_addrs_buffers.txt
+    - linker_scripts/cn/symbol_addrs_overlays.txt
+    - linker_scripts/cn/ignored_addresses.txt
+  reloc_addrs_path:
+    - relocs/reloc_addrs.cn.txt
+
+  asm_path: asm/jp
+  src_path: src
+  asset_path: bin/jp
+
+  build_path: build
+
+  extensions_path: tools/splat_ext
+  mips_abi_float_regs: o32
+
+  do_c_func_detection: True
+  o_as_suffix: True
+  gfx_ucode: f3dex2
+  mnemonic_ljust: 12
+  rom_address_padding: True
+  dump_symbols: True
+  generated_c_preamble: |
+    #include "global.h"
+  asm_inc_header: ""
+  use_legacy_include_asm: False
+  create_asm_dependencies: True
+  string_encoding: EUC-CN
+  data_string_encoding: EUC-CN
+  rodata_string_guesser_level: 2
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  include_macro_inc: False
+  libultra_symbols: True
+  hardware_regs: True
+  # ique_symbols: True
+  # asm_emit_size_directive: True
+  segment_end_before_align: True
+
+segments:
