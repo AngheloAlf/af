@@ -5,11 +5,11 @@
     follows_vram: makerom
     bss_size: 0x9720
     subsegments:
-      - [0x1060, asm]
+      - [0x001060, asm, boot/001060]
 
-      - [0x1C490, data]
+      - [0x01C440, data, boot/01C440]
 
-      - { start: 0x21D80, type: bss, vram: 0x80046980 }
+      - { start: 0x21D80, type: bss, vram: 0x80046980, name: boot/80046980 }
 
 
   #   - name: dmadata

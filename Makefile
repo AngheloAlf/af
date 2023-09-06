@@ -5,6 +5,10 @@
 
 MAKEFLAGS += --no-builtin-rules
 
+# Ensures failing if a piped command fails
+SHELL = /bin/bash
+.SHELLFLAGS = -o pipefail -c
+
 #### Defaults ####
 
 # If COMPARE is 1, check the output md5sum after building
@@ -104,6 +108,7 @@ ASM_PROC        := python3 tools/asm-processor/build.py
 CAT             := cat
 
 ASM_PROC_FLAGS  := --input-enc=utf-8 --output-enc=euc-jp --convert-statics=global-with-filename
+ASM_PROC_FLAGS  := --convert-statics=global-with-filename
 
 SPLAT           ?= tools/splat/split.py
 SPLAT_YAML      ?= $(TARGET).$(VERSION).yaml
@@ -146,9 +151,17 @@ AS_DEFINES      := -DMIPSEB -D_LANGUAGE_ASSEMBLY -D_ULTRA64
 C_DEFINES       := -DLANGUAGE_C -D_LANGUAGE_C
 ENDIAN          := -EB
 
+ifeq ($(VERSION),jp)
 OPTFLAGS        := -O2 -g3
 MIPS_VERSION    := -mips2
 ICONV_FLAGS     := --from-code=UTF-8 --to-code=EUC-JP
+endif
+ifeq ($(VERSION),cn)
+CFLAGS          += -mcpu=4300
+OPTFLAGS        := -O2 -ggdb
+MIPS_VERSION    := -mips2
+ICONV_FLAGS     := --from-code=UTF-8 --to-code=EUC-CN
+endif
 
 # Use relocations and abi fpr names in the dump
 OBJDUMP_FLAGS := --disassemble --reloc --disassemble-zeroes -Mreg-names=32 -Mno-aliases

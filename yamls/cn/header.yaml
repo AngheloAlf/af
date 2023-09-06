@@ -7,7 +7,8 @@ options:
   base_path: .
   compiler: GCC
   find_file_boundaries: True
-  header_encoding: ASCII
+  # header_encoding: ASCII
+  header_encoding: word
   platform: n64
 
   undefined_funcs_auto_path: linker_scripts/cn/auto/undefined_funcs_auto.ld
@@ -23,9 +24,9 @@ options:
   reloc_addrs_path:
     - relocs/reloc_addrs.cn.txt
 
-  asm_path: asm/jp
+  asm_path: asm/cn
   src_path: src
-  asset_path: bin/jp
+  asset_path: bin/cn
 
   build_path: build
 
