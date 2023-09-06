@@ -20,21 +20,25 @@ endif
 
 
 
-IDO_5_3_DIR := ido/$(DETECTED_OS)/5.3
-IDO_5_3     := $(IDO_5_3_DIR)/cc
+IDO_5_3_DIR     := ido/$(DETECTED_OS)/5.3
+IDO_5_3         := $(IDO_5_3_DIR)/cc
 
-IDO_7_1_DIR := ido/$(DETECTED_OS)/7.1
-IDO_7_1     := $(IDO_7_1_DIR)/cc
+IDO_7_1_DIR     := ido/$(DETECTED_OS)/7.1
+IDO_7_1         := $(IDO_7_1_DIR)/cc
 
-all: $(IDO_5_3) $(IDO_7_1)
+EGCS_DIR        := gcc_egcs/$(DETECTED_OS)/1.1.2-4
+EGCS_GCC        := $(EGCS_DIR)/gcc
+EGCS_BINUTILS   := $(EGCS_DIR)/as
+
+all: $(IDO_5_3) $(IDO_7_1) $(EGCS_GCC) $(EGCS_BINUTILS)
 	$(MAKE) -C fado
 	$(MAKE) -C z64compress
 
 clean:
-	$(RM) -rf $(IDO_5_3_DIR) $(IDO_7_1_DIR)
+	$(RM) -rf $(IDO_5_3_DIR) $(IDO_7_1_DIR) $(EGCS_DIR)
 
 distclean: clean
-	$(RM) -rf ido
+	$(RM) -rf ido gcc_egcs
 
 .PHONY: all clean distclean
 
@@ -49,10 +53,23 @@ $(IDO_7_1): | $(IDO_7_1_DIR)
 	tar xf ido-7.1-recomp-$(DOWNLOAD_OS).tar.gz -C $(IDO_7_1_DIR)
 	$(RM) ido-7.1-recomp-$(DOWNLOAD_OS).tar.gz
 
+$(EGCS_GCC): | $(EGCS_DIR)
+	wget https://github.com/decompals/mips-gcc-egcs-2.91.66/releases/latest/download/mips-gcc-egcs-2.91.66-$(DETECTED_OS).tar.gz
+	tar xf mips-gcc-egcs-2.91.66-$(DETECTED_OS).tar.gz -C $(EGCS_DIR)
+	$(RM) mips-gcc-egcs-2.91.66-$(DETECTED_OS).tar.gz
+
+$(EGCS_BINUTILS): | $(EGCS_DIR)
+	wget https://github.com/decompals/mips-binutils-egcs-2.9.5/releases/latest/download/mips-binutils-egcs-2.9.5-$(DETECTED_OS).tar.gz
+	tar xf mips-binutils-egcs-2.9.5-$(DETECTED_OS).tar.gz -C $(EGCS_DIR)
+	$(RM) mips-binutils-egcs-2.9.5-$(DETECTED_OS).tar.gz
+
 $(IDO_5_3_DIR):
 	mkdir -p $@
 
 $(IDO_7_1_DIR):
+	mkdir -p $@
+
+$(EGCS_DIR):
 	mkdir -p $@
 
 distclean: clean

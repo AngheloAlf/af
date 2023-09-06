@@ -4,7 +4,8 @@ import hashlib, io, struct, sys
 from pathlib import Path
 import argparse
 
-from libyaz0 import decompress
+import libyaz0
+import zlib
 
 FILE_TABLE_OFFSET = {
     "jp": 0x19D40,
@@ -13,7 +14,7 @@ FILE_TABLE_OFFSET = {
 
 VERSIONS_MD5S = {
     "jp": "d7ae64f2f47a9fa3f87686a3c5ce09af",
-    "cn": "af83e0cf36298e62e9eb2eb8c89aa710",
+    "cn": "a746d6fd321e731c52a3632aea1e95bb",
 }
 
 description = "Convert a rom that uses dmadata to an uncompressed one."
@@ -34,9 +35,23 @@ correct_str_hash = VERSIONS_MD5S[Version]
 
 
 
+def decompressZlib(data: bytes) -> bytes:
+    decomp = zlib.decompressobj(-zlib.MAX_WBITS)
+    output = bytearray()
+    output.extend(decomp.decompress(data))
+    while decomp.unconsumed_tail:
+        output.extend(decomp.decompress(decomp.unconsumed_tail))
+    output.extend(decomp.flush())
+    return output
+
+def decompressSegment(data: bytes) -> bytes:
+    if Version == "cn":
+        return decompressZlib(data)
+    return libyaz0.decompress(data)
+
 def round_up(n,shift):
     mod = 1 << shift
-    return (n + mod - 1) >> shift << shift 
+    return (n + mod - 1) >> shift << shift
 
 def as_word(b, off=0):
     return struct.unpack(">I", b[off:off+4])[0]
@@ -137,7 +152,7 @@ def decompress_rom(dmadata_addr, dmadata):
         if p_end == 0: # uncompressed
             rom_segments.update({v_start : fileContent[p_start:p_start + v_end - v_start]})
         else: # compressed
-            rom_segments.update({v_start : decompress(fileContent[p_start:p_end])})
+            rom_segments.update({v_start : decompressSegment(fileContent[p_start:p_end])})
         new_dmadata.extend(struct.pack(">IIII", v_start, v_end, v_start, 0))
 
     # write rom segments to vaddrs

@@ -263,7 +263,7 @@ distclean: clean
 
 setup:
 	$(MAKE) -C tools WARNINGS_CHECK=$(WARNINGS_CHECK)
-	python3 tools/decompress_baserom.py
+	python3 tools/decompress_baserom.py --version $(VERSION)
 
 extract:
 	$(RM) -r asm/$(VERSION) bin/$(VERSION)
