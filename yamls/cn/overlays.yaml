@@ -2,3 +2,28 @@
   # TODO
   - type: bin
     start: 0x74B710
+
+  - name: submenu_ovl
+    type: code
+    start: 0x7824B0
+    vram: 0x8085D370
+    # follows_vram: ovl_prenmi_reloc
+    compress: True
+    bss_size: 0x10730
+    subsegments:
+      - [0x7824B0, asm, overlays/submenu/submenu_ovl/m_submenu_ovl]
+      - [0x784630, data, overlays/submenu/submenu_ovl/m_submenu_ovl]
+      - [0x7852D0, rodata, overlays/submenu/submenu_ovl/m_submenu_ovl]
+      - { start: 0x7852F0, type: bss, vram: 0x808601B0, name: overlays/submenu/submenu_ovl/m_submenu_ovl }
+  - name: ovl_submenu_reloc
+    type: code
+    start: 0x7852F0
+    vram: 0x808708E0
+    follows_vram: submenu_ovl
+    compress: True
+    subsegments:
+      - [0x7852F0, data, overlays/submenu/submenu_ovl/m_submenu_ovl_reloc]
+
+  # TODO
+  - type: bin
+    start: 0x785550
