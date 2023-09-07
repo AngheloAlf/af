@@ -11,29 +11,22 @@
 
       - { start: 0x21D80, type: bss, vram: 0x80046980, name: boot/80046980 }
 
-
-  #   - name: dmadata
-  #     type: code
-  #     start: 0x019D40
-  #     vram: 0x80044690
-  #     follows_vram: boot
-  #     subsegments:
-  #       - [0x019D40, .data, dmadata/dmadata]
-  # 
-  #   - name: segment_027130
-  #     type: bin
-  #     start: 0x027130
-  # 
-  #   - name: segment_0E4D10
-  #     type: bin
-  #     start: 0x0E4D10
-  # 
-  #   - name: segment_13D9A0
-  #     type: bin
-  #     start: 0x13D9A0
-
-  # TODO
-  - type: bin
-    start: 0x21D80
+  - name: dmadata
+    type: code
+    start: 0x021D80
+    vram: 0x800500A0
     follows_vram: boot
-  - [0x19A0000]
+    subsegments:
+      - [0x021D80, data, dmadata/dmadata]
+
+  - name: segment_02F170
+    type: bin
+    start: 0x02F170
+
+  - name: segment_0ECD50
+    type: bin
+    start: 0x0ECD50
+
+  - name: segment_1459E0
+    type: bin
+    start: 0x1459E0

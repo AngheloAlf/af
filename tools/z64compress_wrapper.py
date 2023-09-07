@@ -100,6 +100,8 @@ def main():
         else:
             indicesList.append(f"{start}")
 
+    assert len(indicesList) > 0
+
     command = f"./tools/z64compress/z64compress "
     command += f"--in {args.in_rom} "
     command += f"--out {args.out_rom} "

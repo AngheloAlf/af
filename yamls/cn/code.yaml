@@ -1,0 +1,11 @@
+  - name: code
+    type: code
+    start: 0x67D760
+    vram: 0x8005D4A0
+    # follows_vram: 
+    bss_size: 0x37388 # not a multiple of 0x10?
+    subalign: 8
+    subsegments:
+      - [0x67D760, asm, code/67D760]
+      - [0x728890, data, code/728890]
+      - { start: 0x74B710, type: bss, vram: 0x8012B450, name: code/8012B450 }
