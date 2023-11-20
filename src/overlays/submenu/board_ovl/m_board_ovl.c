@@ -1,6 +1,8 @@
 #include "m_board_ovl.h"
 
+#include "segment_symbols.h"
 #include "m_submenu.h"
+#include "z_std_dma.h"
 
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/submenu/submenu_ovl/m_submenu_ovl.h"
@@ -175,10 +177,29 @@ void func_8088A2D0_jp(Submenu* arg0) {
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088A2D0_jp.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088A604_jp.s")
+extern uintptr_t D_8088A9A0_jp[];
+extern UNK_TYPE D_C000000;
+extern UNK_TYPE D_C000000_;
+
+void func_8088A604_jp(Submenu* submenu) {
+    struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
+    RomOffset temp = SEGMENT_ROM_START(segment_00AE3000);
+    void* vram;
+
+    temp_v0->unk_BC = D_8088A9A0_jp[temp_v0->unk_08.unk_29];
+
+    vram = temp_v0->unk_B8;
+    if (vram == NULL) {
+        temp_v0->unk_B8 = submenu->unk_2C->unk_10000.unk_00;
+        submenu->unk_2C->unk_10000.unk_00 = (uintptr_t)submenu->unk_2C->unk_10000.unk_00 + 0x1400;
+    }
+    vram = temp_v0->unk_B8;
+
+    DmaMgr_RequestSyncDebug(vram, temp + temp_v0->unk_BC - (uintptr_t)&D_C000000, D_8088A9A0_jp[temp_v0->unk_08.unk_29+1] - temp_v0->unk_BC, "../m_board_ovl.c", 1228);
+    temp_v0->unk_BC = temp_v0->unk_BC - (uintptr_t)&D_C000000_;
+}
 
 //? func_8088A2D0_jp(Submenu*);                       /* extern */
-//? func_8088A604_jp(Submenu*);                       /* extern */
 
 // board_ovl_data
 extern struct_8085E9B0_unk_106E4 B_8088AC00_jp;

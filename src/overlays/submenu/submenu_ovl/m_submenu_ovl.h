@@ -149,8 +149,9 @@ typedef struct struct_8085E9B0_unk_106E4 {
     /* 0xAC */ Mail* unk_AC;
     /* 0xB0 */ f32 unk_B0;
     /* 0xB4 */ f32 unk_B4;
-    /* 0xB8 */ UNK_TYPE4 unk_B8;
-} struct_8085E9B0_unk_106E4; // size >= 0xBC, <= 0xC0
+    /* 0xB8 */ void* unk_B8;
+    /* 0xBC */ unsigned int unk_BC; // TODO: unsigned int is used as a placeholder
+} struct_8085E9B0_unk_106E4; // size = 0xC0
 
 typedef void (*struct_8085E9B0_unk_106A4)(struct Submenu*, struct_mSM_return_func_arg1*);
 typedef void (*struct_8085E9B0_unk_106A8)(struct Submenu*, struct_mSM_move_Move_arg1*);

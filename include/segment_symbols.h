@@ -95,5 +95,7 @@ DECLARE_SEGMENT(ac_set_ovl_gyoei);
 
 DECLARE_SEGMENT(segment_00A58000);
 
+DECLARE_SEGMENT(segment_00AE3000);
+
 
 #endif
