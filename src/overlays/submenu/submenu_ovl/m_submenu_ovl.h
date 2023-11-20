@@ -112,7 +112,9 @@ typedef struct struct_8085E9B0_unk_103E8 {
     /* 0x14 */ UNK_TYPE1 unk_14[0x4];
     /* 0x18 */ f32 unk_18;
     /* 0x1C */ f32 unk_1C;
-    /* 0x20 */ UNK_TYPE1 unk_20[0x10];
+    /* 0x20 */ UNK_TYPE1 unk_20[0x8];
+    /* 0x28 */ void* unk_28;
+    /* 0x28 */ UNK_TYPE1 unk_2C[0x4];
     /* 0x30 */ UNK_TYPE4 unk_30;
     /* 0x34 */ UNK_TYPE4 unk_34;
     /* 0x38 */ s32 unk_38;

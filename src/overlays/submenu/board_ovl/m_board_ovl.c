@@ -4,6 +4,8 @@
 #include "m_submenu.h"
 #include "z_std_dma.h"
 
+#include "code_variables.h"
+
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/submenu/submenu_ovl/m_submenu_ovl.h"
 
@@ -37,8 +39,48 @@ void mBD_board_ovl_move(Submenu* submenu) {
     D_8088ABA4_jp[temp_a1->unk_04](submenu, temp_a1);
 }
 
-void func_80889574_jp(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8*, f32, f32, struct_8085E9B0_unk_106E4*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889574_jp.s")
+extern Gfx* D_8088A7A0_jp[];
+extern Gfx* D_8088A8A0_jp[];
+extern Gfx D_C000120[];
+extern Gfx D_C000158[];
+
+void func_80889574_jp(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
+    s32 sp34 = arg4->unk_08.unk_29;
+
+    gSegments[0xC] = OS_K0_TO_PHYSICAL(arg1->unk_28);
+
+    Matrix_scale(16.0f, 16.0f, 1.0f, MTXMODE_NEW);
+    Matrix_translate(arg2, arg3, 140.0f, MTXMODE_APPLY);
+
+    OPEN_DISPS(gfxCtx);
+
+    {
+        Gfx* gfx = POLY_OPA_DISP;
+        Gfx** temp_a1;
+
+        gSPSegment(gfx++, 0x0C, arg1->unk_28);
+        gSPMatrix(gfx++, _Matrix_to_Mtx_new(gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPDisplayList(gfx++, D_C000120);
+
+        gSPSegment(gfx++, 0x0C, (int)arg4->unk_B8 - arg4->unk_BC);
+        gSPDisplayList(gfx++, D_8088A7A0_jp[sp34]);
+
+        temp_a1 = &D_8088A8A0_jp[sp34];
+        if (*temp_a1 != NULL) {
+            gSPSegment(gfx++, 0x0C, arg1->unk_28);
+            gSPDisplayList(gfx++, D_C000158);
+
+            gSPSegment(gfx++, 0x0C, (uintptr_t)arg4->unk_B8 - arg4->unk_BC);
+            gSPDisplayList(gfx++, *temp_a1);
+        }
+
+        gSPSegment(gfx++, 0x0C, arg1->unk_28);
+
+        POLY_OPA_DISP = gfx;
+    }
+
+    CLOSE_DISPS(gfxCtx);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088973C_jp.s")
 
