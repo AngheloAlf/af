@@ -25,7 +25,9 @@ typedef struct mMl_unk_00 {
 } mMl_unk_00; // size = 0x12
 
 typedef struct mMl_unk_2A {
-    /* 0x00 */ UNK_TYPE1 unk_00[0x7A];
+    /* 0x00 */ char unk_00[0xA];
+    /* 0x0A */ char unk_0A[0x60];
+    /* 0x6A */ char unk_6A[0x10];
 } mMl_unk_2A; // size = 0x7A
 
 typedef struct MailHeaderCommon {
@@ -41,7 +43,7 @@ typedef struct Mail {
     /* 0x12 */ mMl_unk_00 unk_12;
     /* 0x24 */ UNK_TYPE1 unk_24[0x2];
     /* 0x26 */ u8 unk_26;
-    /* 0x27 */ UNK_TYPE1 unk_27[0x1];
+    /* 0x27 */ u8 unk_27;
     /* 0x28 */ u8 unk_28;
     /* 0x29 */ u8 unk_29;
     /* 0x2A */ mMl_unk_2A unk_2A;

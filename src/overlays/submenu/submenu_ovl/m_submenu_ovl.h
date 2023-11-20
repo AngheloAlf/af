@@ -3,6 +3,7 @@
 
 #include "ultra64.h"
 #include "other_types.h"
+#include "m_mail.h"
 #include "unk.h"
 
 struct GraphicsContext;
@@ -101,7 +102,7 @@ typedef struct struct_8085E9B0_unk_10088 {
     /* 0x44 */ UNK_TYPE4 unk_44;
 } struct_8085E9B0_unk_10088; // size = 0x48
 
-// Specific to m_board_ovl.c?
+// TODO: Specific to m_board_ovl.c?
 typedef struct struct_8085E9B0_unk_103E8 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x4];
     /* 0x04 */ s32 unk_04;
@@ -111,9 +112,13 @@ typedef struct struct_8085E9B0_unk_103E8 {
     /* 0x14 */ UNK_TYPE1 unk_14[0x4];
     /* 0x18 */ f32 unk_18;
     /* 0x1C */ f32 unk_1C;
-    /* 0x20 */ UNK_TYPE1 unk_20[0x18];
+    /* 0x20 */ UNK_TYPE1 unk_20[0x10];
+    /* 0x30 */ UNK_TYPE4 unk_30;
+    /* 0x34 */ UNK_TYPE4 unk_34;
     /* 0x38 */ s32 unk_38;
-} struct_8085E9B0_unk_103E8; // size >= 0x3C
+    /* 0x3C */ s32 unk_3C;
+    /* 0x40 */ Mail* unk_40;
+} struct_8085E9B0_unk_103E8; // size >= 0x44
 
 typedef struct struct_8085E9B0_unk_10670 {
     /* 0x00 */ struct_8085E9B0_unk_10670_unk_00 unk_00;
@@ -132,10 +137,18 @@ typedef struct struct_8085E9B0_unk_10670 {
 } struct_8085E9B0_unk_10670; // size >= 0x30
 
 typedef struct struct_8085E9B0_unk_106E4 {
-    /* 0x00 */ UNK_TYPE1 unk_00[0x4];
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
     /* 0x04 */ u8 unk_04;
-    /* 0x05 */ UNK_TYPE1 unk_05[0x3];
-    /* 0x08 */ UNK_TYPE1 unk_08[0xB0];
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ Mail unk_08;
+    /* 0xAC */ Mail* unk_AC;
+    /* 0xB0 */ f32 unk_B0;
+    /* 0xB4 */ f32 unk_B4;
     /* 0xB8 */ UNK_TYPE4 unk_B8;
 } struct_8085E9B0_unk_106E4; // size >= 0xBC, <= 0xC0
 
@@ -158,9 +171,9 @@ typedef struct struct_8085E9B0 {
     /* 0x10088 */ struct_8085E9B0_unk_10088 unk_10088[UNK_SIZE];
     /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x318];
     /* 0x103E8 */ struct_8085E9B0_unk_103E8 unk_103E8;
-    /* 0x10424 */ UNK_TYPE1 unk_10424[0x24C];
+    /* 0x1042C */ UNK_TYPE1 unk_1042C[0x244];
     /* 0x10670 */ struct_8085E9B0_unk_10670 unk_10670;
-    /* 0x106A0 */ UNK_TYPE1 unk_106A0[0x4];
+    /* 0x106A0 */ UNK_TYPE4 unk_106A0;
     /* 0x106A4 */ struct_8085E9B0_unk_106A4 returnFunc;
     /* 0x106A8 */ struct_8085E9B0_unk_106A8 moveMove;
     /* 0x106AC */ struct_8085E9B0_unk_106AC moveEnd;

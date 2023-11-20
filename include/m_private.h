@@ -4,6 +4,7 @@
 #include "ultra64.h"
 #include "m_mail.h"
 #include "m_quest.h"
+#include "6DB420.h"
 #include "unk.h"
 
 #define mPr_FOREIGN_MAP_COUNT 8
@@ -51,7 +52,7 @@ typedef struct PrivateInventory {
 } PrivateInventory; // size = 0x2C
 
 typedef struct PrivateInfo {
-    /* 0x000 */ UNK_TYPE1 unk000[0x10];
+    /* 0x000 */ PersonalID unk_000;
     /* 0x010 */ s8 gender;
     /* 0x011 */ UNK_TYPE1 unk011[0x3];
     /* 0x014 */ PrivateInventory inventory;
