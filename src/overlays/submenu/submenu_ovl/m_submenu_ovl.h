@@ -148,7 +148,9 @@ typedef struct struct_8085E9B0 {
     /* 0x106C4 */ struct_8085E9B0_unk_106C4 drawMail;
     /* 0x106C8 */ struct_8085E9B0_unk_106C8 setupView;
     /* 0x106CC */ struct_8085E9B0_unk_106CC unk_106CC;
-    /* 0x106D0 */ UNK_TYPE1 unk_106D0[0x5C];
+    /* 0x106D0 */ UNK_TYPE1 unk_106D0[0x14];
+    /* 0x106E4 */ UNK_TYPE* unk_106E4;
+    /* 0x106E8 */ UNK_TYPE1 unk_106E8[0x44];
     /* 0x1072C */ Mtx* unk_1072C;
 } struct_8085E9B0; // size = 0x10730
 
