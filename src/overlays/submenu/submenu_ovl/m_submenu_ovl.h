@@ -101,6 +101,20 @@ typedef struct struct_8085E9B0_unk_10088 {
     /* 0x44 */ UNK_TYPE4 unk_44;
 } struct_8085E9B0_unk_10088; // size = 0x48
 
+// Specific to m_board_ovl.c?
+typedef struct struct_8085E9B0_unk_103E8 {
+    /* 0x00 */ UNK_TYPE1 unk_00[0x4];
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ UNK_TYPE1 unk_08[0x4];
+    /* 0x0C */ UNK_FUN_PTR unk_0C;
+    /* 0x10 */ UNK_FUN_PTR unk_10;
+    /* 0x14 */ UNK_TYPE1 unk_14[0x4];
+    /* 0x18 */ f32 unk_18;
+    /* 0x1C */ f32 unk_1C;
+    /* 0x20 */ UNK_TYPE1 unk_20[0x18];
+    /* 0x38 */ s32 unk_38;
+} struct_8085E9B0_unk_103E8; // size >= 0x3C
+
 typedef struct struct_8085E9B0_unk_10670 {
     /* 0x00 */ struct_8085E9B0_unk_10670_unk_00 unk_00;
     /* 0x04 */ struct_8085E9B0_unk_10670_unk_04 unk_04;
@@ -116,6 +130,14 @@ typedef struct struct_8085E9B0_unk_10670 {
     /* 0x28 */ f32 unk_28;
     /* 0x2C */ f32 unk_2C;
 } struct_8085E9B0_unk_10670; // size >= 0x30
+
+typedef struct struct_8085E9B0_unk_106E4 {
+    /* 0x00 */ UNK_TYPE1 unk_00[0x4];
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ UNK_TYPE1 unk_05[0x3];
+    /* 0x08 */ UNK_TYPE1 unk_08[0xB0];
+    /* 0xB8 */ UNK_TYPE4 unk_B8;
+} struct_8085E9B0_unk_106E4; // size >= 0xBC, <= 0xC0
 
 typedef void (*struct_8085E9B0_unk_106A4)(struct Submenu*, struct_mSM_return_func_arg1*);
 typedef void (*struct_8085E9B0_unk_106A8)(struct Submenu*, struct_mSM_move_Move_arg1*);
@@ -134,7 +156,9 @@ typedef struct struct_8085E9B0 {
     /* 0x10000 */ struct_8085E9B0_unk_10000 unk_10000;
     /* 0x1006C */ UNK_TYPE1 unk_1006C[0x1C];
     /* 0x10088 */ struct_8085E9B0_unk_10088 unk_10088[UNK_SIZE];
-    /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x5A0];
+    /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x318];
+    /* 0x103E8 */ struct_8085E9B0_unk_103E8 unk_103E8;
+    /* 0x10424 */ UNK_TYPE1 unk_10424[0x24C];
     /* 0x10670 */ struct_8085E9B0_unk_10670 unk_10670;
     /* 0x106A0 */ UNK_TYPE1 unk_106A0[0x4];
     /* 0x106A4 */ struct_8085E9B0_unk_106A4 returnFunc;
@@ -149,7 +173,7 @@ typedef struct struct_8085E9B0 {
     /* 0x106C8 */ struct_8085E9B0_unk_106C8 setupView;
     /* 0x106CC */ struct_8085E9B0_unk_106CC unk_106CC;
     /* 0x106D0 */ UNK_TYPE1 unk_106D0[0x14];
-    /* 0x106E4 */ UNK_TYPE* unk_106E4;
+    /* 0x106E4 */ struct_8085E9B0_unk_106E4* unk_106E4;
     /* 0x106E8 */ UNK_TYPE1 unk_106E8[0x44];
     /* 0x1072C */ Mtx* unk_1072C;
 } struct_8085E9B0; // size = 0x10730
