@@ -130,75 +130,60 @@ void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     }
 }
 
-#if 0
 void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
-    s8* sp5C;
+    struct_8085E9B0_unk_104C0* temp_v1; // sp5C
+    struct_8085E9B0_unk_106E4* temp_s0;
     struct_8085E9B0_unk_106E0* sp54;
     MailHeaderCommon* sp50;
-    s32 sp4C;
+    s32 temp_v0_3; // sp4C
     s32 sp48;
-    s32 sp44;
-    u8* sp40;
-    u8 sp2C;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
-    s32 temp_v0_4;
-    s32 var_v0;
-    s8* temp_v1;
-    struct_8085E9B0* temp_v0;
-    struct_8085E9B0_unk_106E4* temp_s0;
-    u8* var_a3;
+    s32 var_v0; // sp44
+    char* var_a3; // sp40
+    char sp2C[0x10+1];
 
-    temp_v0 = submenu->unk_2C;
-    temp_s0 = temp_v0->unk_106E4;
-    temp_v1 = &temp_v0->unk_1042C[0x94];
-    sp5C = temp_v1;
+    temp_v1 = &submenu->unk_2C->unk_104C0;
+    temp_s0 = submenu->unk_2C->unk_106E4;
     mBD_roll_control2(arg1);
-    if ((temp_v1->unk_4 == 0) && (temp_v1->unk_30 == 4)) {
+    if ((temp_v1->unk_04 == 0) && (temp_v1->unk_30 == 4)) {
         sp54 = submenu->unk_2C->unk_106E0;
-        temp_v0_2 = temp_v1->unk_3C;
-        if (temp_v0_2 == 0) {
+        if (temp_v1->unk_3C == 0) {
             sp50 = &common_data.privateInfo->unk_3EE;
             mMl_copy_mail(temp_s0->unk_AC, &temp_s0->unk_08);
             temp_v0_3 = mMl_strlen(&temp_s0->unk_08.unk_2A.unk_6A, 0x10, 0x20);
             sp48 = temp_s0->unk_07 - temp_v0_3;
-            sp4C = temp_v0_3;
             mem_copy(&sp2C, (u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
-            var_a3 = &sp2C;
-            var_v0 = 0;
-            if (sp4C > 0) {
-loop_5:
-                if (*var_a3 == 0x20) {
-                    var_v0 += 1;
-                    var_a3 += 1;
-                    if (var_v0 != sp4C) {
-                        goto loop_5;
-                    }
+
+            for (var_a3 = &sp2C, var_v0 = 0; var_v0 < temp_v0_3; var_v0++) {
+                if (*var_a3 != 0x20) {
+                    break;
                 }
+                var_a3 += 1;
             }
-            sp40 = var_a3;
-            sp44 = var_v0;
-            mem_clear((u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U, 0x20U);
+
+            mem_clear(&temp_s0->unk_AC->unk_2A.unk_6A, 0x10U, 0x20U);
             if (sp48 < 0x10) {
-                mem_copy((u8* ) (&temp_s0->unk_AC->unk_00.unk_00.unk_0.unk_0[sp48] + 0x94), var_a3, sp4C - var_v0);
+                mem_copy(&temp_s0->unk_AC->unk_2A.unk_6A[sp48], var_a3, temp_v0_3 - var_v0);
             }
-            sp50->unk_00 = (s8) temp_s0->unk_08.unk_27;
-            mem_copy(sp50->unk_02, &temp_s0->unk_AC->unk_2A.unk_0, 0xAU);
-            mem_copy(sp50->unk_0C, (u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
-            temp_v0_4 = arg1->unk_3C;
-            if (temp_v0_4 != -1) {
-                mPr_SetPossessionItem(common_data.privateInfo, temp_v0_4, 0U, 0U);
+
+            sp50->unk_00 = temp_s0->unk_08.unk_27;
+            mem_copy(sp50->unk_02, temp_s0->unk_AC->unk_2A.unk_00, 0xAU);
+            mem_copy(sp50->unk_0C, temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
+
+            if (arg1->unk_3C != -1) {
+                mPr_SetPossessionItem(common_data.privateInfo, arg1->unk_3C, 0U, 0U);
                 submenu->unk_2C->unk_106D0->unk_10C(submenu);
             }
+
             mBD_end_board(submenu, arg1);
-        } else if (temp_v0_2 == 1) {
-            mSM_open_submenu_new(submenu, SUBMENU_PROGRAM_10, 0, 0, (s32) &temp_s0->unk_08.unk_2A.unk_A);
+        } else if (temp_v1->unk_3C == 1) {
+            mSM_open_submenu_new(submenu, SUBMENU_PROGRAM_10, 0, 0, &temp_s0->unk_08.unk_2A.unk_0A);
             temp_s0->unk_00 = 1;
             temp_s0->unk_02 = 0;
             arg1->unk_04 = 1;
         } else {
             mBD_end_board(submenu, arg1);
         }
+
         if (sp54 != NULL) {
             sp54->unk_16 = 0;
             sp54->unk_20 = 0;
@@ -206,10 +191,6 @@ loop_5:
         }
     }
 }
-#else
-void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Obey.s")
-#endif
 
 void mBD_move_End(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->moveEnd(submenu, arg1);
