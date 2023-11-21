@@ -61,14 +61,18 @@ void mBD_move_Wait(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889198_jp.s")
+void mBD_end_board(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    struct_mSM_move_Move_arg1* sp1C = &submenu->unk_2C->unk_10430;
+    struct_8085E9B0* temp_v0 = submenu->unk_2C;
+
+    temp_v0->moveChgBase(arg1, 4U);
+    submenu->unk_2C->returnFunc(submenu, sp1C);
+}
 
 void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Play.s")
 
 #if 0
-//? func_80889198_jp(Submenu*, struct_mSM_move_Move_arg1*); /* extern */
-
 void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     s8* sp5C;
     struct_8085E9B0_unk_106E0* sp54;
@@ -128,14 +132,14 @@ loop_5:
                 mPr_SetPossessionItem(common_data.privateInfo, temp_v0_4, 0U, 0U);
                 submenu->unk_2C->unk_106D0->unk_10C(submenu);
             }
-            func_80889198_jp(submenu, arg1);
+            mBD_end_board(submenu, arg1);
         } else if (temp_v0_2 == 1) {
             mSM_open_submenu_new(submenu, SUBMENU_PROGRAM_10, 0, 0, (s32) &temp_s0->unk_08.unk_2A.unk_A);
             temp_s0->unk_00 = 1;
             temp_s0->unk_02 = 0;
             arg1->unk_04 = 1;
         } else {
-            func_80889198_jp(submenu, arg1);
+            mBD_end_board(submenu, arg1);
         }
         if (sp54 != NULL) {
             sp54->unk_16 = 0;

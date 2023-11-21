@@ -153,7 +153,9 @@ typedef struct struct_8085E9B0 {
     /* 0x10088 */ struct_8085E9B0_unk_10088 unk_10088[UNK_SIZE];
     /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x318];
     /* 0x103E8 */ struct_mSM_move_Move_arg1 unk_103E8;
-    /* 0x1042C */ UNK_TYPE1 unk_1042C[0x244];
+    /* 0x1042C */ UNK_TYPE1 unk_1042C[0x4];
+    /* 0x10430 */ struct_mSM_move_Move_arg1 unk_10430;
+    /* 0x10474 */ UNK_TYPE1 unk_10474[0x1FC];
     /* 0x10670 */ struct_8085E9B0_unk_10670 unk_10670;
     /* 0x106A0 */ UNK_TYPE4 unk_106A0;
     /* 0x106A4 */ struct_8085E9B0_unk_106A4 returnFunc;
