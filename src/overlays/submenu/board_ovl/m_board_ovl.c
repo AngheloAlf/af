@@ -21,7 +21,34 @@ extern Gfx D_C0001C0[];
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80888E90_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889028_jp.s")
+void mBD_roll_control2(struct_mSM_move_Move_arg1* arg0) {
+    f32 temp_fv0 = arg0->unk_18[1] - arg0->unk_20[1];
+
+    if (arg0->unk_20[1] < 1.0f) {
+        arg0->unk_20[1] = 1.0f;
+    }
+
+    if (temp_fv0 > 0.0f) {
+        arg0->unk_18[1] = temp_fv0;
+        if (temp_fv0 > -15.0f) {
+            arg0->unk_20[1] *= 2.0f;
+            if (arg0->unk_20[1] > 16.0f) {
+                arg0->unk_20[1] = 16.0f;
+            }
+        } else if (temp_fv0 < 31.0f) {
+            arg0->unk_20[1] /= 2.0f;
+            if (arg0->unk_20[1] < 1.0f) {
+                arg0->unk_20[1] = 1.0f;
+
+                //! FAKE
+                label: ;
+            }
+        }
+    } else {
+        arg0->unk_18[1] = 0.0f;
+        arg0->unk_20[1] = 0.0f;
+    }
+}
 
 void mBD_move_Move(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->moveMove(submenu, arg1);
@@ -40,7 +67,6 @@ void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Play.s")
 
 #if 0
-//? func_80889028_jp(struct_mSM_move_Move_arg1*);     /* extern */
 //? func_80889198_jp(Submenu*, struct_mSM_move_Move_arg1*); /* extern */
 
 void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
@@ -65,7 +91,7 @@ void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     temp_s0 = temp_v0->unk_106E4;
     temp_v1 = &temp_v0->unk_1042C[0x94];
     sp5C = temp_v1;
-    func_80889028_jp(arg1);
+    mBD_roll_control2(arg1);
     if ((temp_v1->unk_4 == 0) && (temp_v1->unk_30 == 4)) {
         sp54 = submenu->unk_2C->unk_106E0;
         temp_v0_2 = temp_v1->unk_3C;
