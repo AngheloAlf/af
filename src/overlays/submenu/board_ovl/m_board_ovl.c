@@ -23,27 +23,27 @@ extern Gfx D_C0001C0[];
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889028_jp.s")
 
-void func_8088910C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+void mBD_move_Move(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->moveMove(submenu, arg1);
 }
 
-void func_8088913C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+void mBD_move_Wait(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     if (getTrigger() & (A_BUTTON | B_BUTTON | START_BUTTON)) {
         submenu->unk_2C->moveChgBase(arg1, 4);
-        func_800D1A9C_jp(0x5F);
+        sAdo_SysTrgStart(0x5F);
     }
 }
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889198_jp.s")
 
-void func_8088920C_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088920C_jp.s")
+void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1*);
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Play.s")
 
 #if 0
 //? func_80889028_jp(struct_mSM_move_Move_arg1*);     /* extern */
 //? func_80889198_jp(Submenu*, struct_mSM_move_Move_arg1*); /* extern */
 
-void func_80889288_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     s8* sp5C;
     struct_8085E9B0_unk_106E0* sp54;
     MailHeaderCommon* sp50;
@@ -119,25 +119,34 @@ loop_5:
     }
 }
 #else
-void func_80889288_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889288_jp.s")
+void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1*);
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Obey.s")
 #endif
 
-void func_808894E4_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+void mBD_move_End(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->moveEnd(submenu, arg1);
 }
 
 typedef void (*struct_8088ABA4_jp)(Submenu* submenu, struct_mSM_move_Move_arg1*);
 
-// ovl_move_proc$573 ?
-extern struct_8088ABA4_jp D_8088ABA4_jp[];
+extern struct_8088ABA4_jp ovl_move_proc_573[];
+
+#if 0
+struct_8088ABA4_jp ovl_move_proc_573[] = {
+    mBD_move_Move,
+    mBD_move_Play,
+    mBD_move_Wait,
+    mBD_move_Obey,
+    mBD_move_End,
+};
+#endif
 
 void mBD_board_ovl_move(Submenu* submenu) {
     struct_mSM_move_Move_arg1* temp_a1 = &submenu->unk_2C->unk_103E8;
 
     temp_a1->unk_0C(submenu);
 
-    D_8088ABA4_jp[temp_a1->unk_04](submenu, temp_a1);
+    ovl_move_proc_573[temp_a1->unk_04](submenu, temp_a1);
 }
 
 void mBD_set_frame_dl(GraphicsContext* gfxCtx, struct_mSM_move_Move_arg1* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
