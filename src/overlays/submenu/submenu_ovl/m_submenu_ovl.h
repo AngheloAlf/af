@@ -155,6 +155,18 @@ typedef struct struct_8085E9B0_unk_106E4 {
     /* 0xBC */ unsigned int unk_BC; // TODO: unsigned int is used as a placeholder
 } struct_8085E9B0_unk_106E4; // size = 0xC0
 
+typedef UNK_RET (*struct_8085E9B0_unk_106E0_unk_28)(struct Submenu*, struct Game_Play*, f32, f32);
+typedef UNK_RET (*struct_8085E9B0_unk_106E0_unk_2C)(f32, struct Submenu*, f32, f32);
+
+typedef struct struct_8085E9B0_unk_106E0 {
+    /* 0x00 */ UNK_TYPE1 unk_00[0x20];
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ UNK_TYPE1 unk_24[0x4];
+    /* 0x28 */ struct_8085E9B0_unk_106E0_unk_28 unk_28;
+    /* 0x2C */ struct_8085E9B0_unk_106E0_unk_2C unk_2C;
+} struct_8085E9B0_unk_106E0; // size >= 0x30
+
 typedef void (*struct_8085E9B0_unk_106A4)(struct Submenu*, struct_mSM_return_func_arg1*);
 typedef void (*struct_8085E9B0_unk_106A8)(struct Submenu*, struct_mSM_move_Move_arg1*);
 typedef void (*struct_8085E9B0_unk_106AC)(struct Submenu*, struct_mSM_return_func_arg1*);
@@ -188,7 +200,8 @@ typedef struct struct_8085E9B0 {
     /* 0x106C4 */ struct_8085E9B0_unk_106C4 drawMail;
     /* 0x106C8 */ struct_8085E9B0_unk_106C8 setupView;
     /* 0x106CC */ struct_8085E9B0_unk_106CC unk_106CC;
-    /* 0x106D0 */ UNK_TYPE1 unk_106D0[0x14];
+    /* 0x106D0 */ UNK_TYPE1 unk_106D0[0x10];
+    /* 0x106E0 */ struct_8085E9B0_unk_106E0* unk_106E0;
     /* 0x106E4 */ struct_8085E9B0_unk_106E4* unk_106E4;
     /* 0x106E8 */ UNK_TYPE1 unk_106E8[0x44];
     /* 0x1072C */ Mtx* unk_1072C;

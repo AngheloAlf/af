@@ -9,6 +9,14 @@
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/submenu/submenu_ovl/m_submenu_ovl.h"
 
+extern Gfx* D_8088A7A0_jp[];
+extern Gfx* D_8088A8A0_jp[];
+extern Gfx D_C000120[];
+extern Gfx D_C000158[];
+
+extern Gfx D_C000040[];
+extern Gfx D_C0001C0[];
+
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80888E90_jp.s")
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889028_jp.s")
@@ -38,11 +46,6 @@ void mBD_board_ovl_move(Submenu* submenu) {
 
     D_8088ABA4_jp[temp_a1->unk_04](submenu, temp_a1);
 }
-
-extern Gfx* D_8088A7A0_jp[];
-extern Gfx* D_8088A8A0_jp[];
-extern Gfx D_C000120[];
-extern Gfx D_C000158[];
 
 void func_80889574_jp(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
     s32 sp34 = arg4->unk_08.unk_29;
@@ -82,18 +85,113 @@ void func_80889574_jp(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8* arg1, 
     CLOSE_DISPS(gfxCtx);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088973C_jp.s")
+void func_8088973C_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
+    GraphicsContext* gfxCtx = game_play->state.gfxCtx;
+    struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
 
+    submenu->unk_2C->unk_106E4->unk_B0 = ((f32) (temp_v0->unk_08.unk_27 + 3) * 12.0f) + arg2 + -96.0f;
+    temp_v0->unk_B4 = arg3 - -76.0f;
+    Matrix_scale(16.0f, 16.0f, 1.0f, MTXMODE_NEW);
+    Matrix_translate(temp_v0->unk_B0, temp_v0->unk_B4, 140.0f, MTXMODE_APPLY);
+
+    OPEN_DISPS(gfxCtx);
+
+    {
+        Gfx* gfx = POLY_OPA_DISP;
+        s32 pad;
+
+        gSPMatrix(gfx++, _Matrix_to_Mtx_new(gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPDisplayList(gfx++, D_C000120);
+        gSPDisplayList(gfx++, D_C0001C0);
+        gSPDisplayList(gfx++, D_C000040);
+
+        POLY_OPA_DISP = gfx;
+    }
+
+    CLOSE_DISPS(gfxCtx);
+}
+
+#if 0
+void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
+    f32 var_fa0;
+    f32 var_fv0;
+    f32 var_fv1;
+    s32 var_v0;
+    struct_8085E9B0_unk_106E0* temp_t0;
+    struct_8085E9B0_unk_106E4* temp_v1;
+
+    temp_t0 = submenu->unk_2C->unk_106E0;
+    temp_v1 = submenu->unk_2C->unk_106E4;
+
+    if (temp_v1->unk_02 == 1) {
+        func_8088973C_jp(submenu, game_play, arg2, arg3);
+        return;
+    }
+
+    var_v0 = temp_t0->unk_20 - 1;
+    if (temp_v1->unk_00 == 0) {
+        if (temp_v1->unk_02 == 2) {
+            var_v0 += 6;
+        }
+        var_fa0 = 0.0f;
+        var_fv1 = 0.0f;
+        var_fv0 = (f32) var_v0 + 0.3f;
+    } else if (temp_v1->unk_00 == 1) {
+        var_fa0 = 12.0f;
+        var_fv0 = (f32) var_v0 + 0.3f;
+        var_fv1 = (f32) (temp_t0->unk_22 + 1);
+    } else {
+        var_fa0 = 24.0f;
+        var_fv1 = 7.0f;
+        var_fv0 = (f32) ((var_v0 - temp_v1->unk_07) + 0x10) + 0.3f;
+    }
+    temp_t0->unk_2C(var_fa0, submenu, 64.0f + arg2 + (var_fv0 * 12.0f), 36.0f - ((arg3 - (var_fv1 * 16.0f)) - var_fa0));
+}
+#else
+void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889878_jp.s")
+#endif
 
+void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, UNK_TYPE4* arg4);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_808899E4_jp.s")
 
+void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, UNK_TYPE4* arg7);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889A9C_jp.s")
 
+void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4, UNK_TYPE4* arg5);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889CD8_jp.s")
 
+extern UNK_TYPE4 D_8088AAA4_jp[];
+
+#if 0
+void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4) {
+    f32 sp40;
+    f32 sp3C;
+    f32 sp38;
+    UNK_TYPE4* temp_v1; // sp34
+    f32 temp_fv0; // sp30
+    f32 temp_ft2;
+
+    temp_fv0 = 64.0f + arg3;
+    temp_ft2 = 36.0f - arg4;
+    temp_v1 = &D_8088AAA4_jp[submenu->unk_2C->unk_106E4->unk_08.unk_29];
+    sp40 = temp_ft2;
+    func_80889CD8_jp(submenu, game_play, arg2, temp_fv0, temp_ft2, temp_v1);
+    sp40 = sp40 + 28.0f;
+    sp3C = temp_fv0 - 160.0f;
+    sp38 = 120.0f - sp40;
+    func_80889A9C_jp(submenu, arg2, game_play, temp_fv0, &sp40, &sp3C, &sp38, temp_v1);
+    sp40 = sp40 + 12.0f;
+    func_808899E4_jp(submenu, game_play, temp_fv0, sp40, temp_v1);
+    if ((arg2->unk_04 == 1) && (submenu->unk_2C->unk_106E0 != NULL)) {
+        func_80889878_jp(submenu, game_play, arg3, arg4);
+        submenu->unk_2C->unk_106E0->unk_28(submenu, game_play, sp3C, sp38);
+    }
+}
+#else
 void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8*, f32, f32);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889FB0_jp.s")
+#endif
 
 void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
