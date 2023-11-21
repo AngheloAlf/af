@@ -63,19 +63,11 @@ typedef struct struct_mSM_move_Move_arg1 {
     /* 0x28 */ void* unk_28;
     /* 0x28 */ UNK_TYPE1 unk_2C[0x4];
     /* 0x30 */ UNK_TYPE4 unk_30;
-    /* 0x34 */ UNK_TYPE4 unk_34;
+    /* 0x34 */ u32 unk_34;
     /* 0x38 */ s32 unk_38;
     /* 0x3C */ s32 unk_3C;
     /* 0x40 */ Mail* unk_40;
 } struct_mSM_move_Move_arg1; // size >= 0x44
-
-typedef struct struct_mSM_move_chg_base_arg0 {
-    /* 0x00 */ UNK_TYPE1 unk_00[0x4];
-    /* 0x04 */ UNK_TYPE4 unk_04;
-    /* 0x08 */ UNK_TYPE1 unk_08[0x28];
-    /* 0x04 */ UNK_TYPE4 unk_30;
-    /* 0x04 */ u32 unk_34;
-} struct_mSM_move_chg_base_arg0;
 
 typedef struct struct_func_8085D43C_jp_arg2 {
     /* 0x0 */ RomOffset vromStart;
@@ -157,7 +149,7 @@ typedef struct struct_8085E9B0_unk_106E0 {
 typedef void (*struct_8085E9B0_unk_106A4)(struct Submenu*, struct_mSM_return_func_arg1*);
 typedef void (*struct_8085E9B0_unk_106A8)(struct Submenu*, struct_mSM_move_Move_arg1*);
 typedef void (*struct_8085E9B0_unk_106AC)(struct Submenu*, struct_mSM_return_func_arg1*);
-typedef void (*struct_8085E9B0_unk_106B0)(struct_mSM_move_chg_base_arg0*, u32);
+typedef void (*struct_8085E9B0_unk_106B0)(struct_mSM_move_Move_arg1*, u32);
 typedef void (*struct_8085E9B0_unk_106B4)(struct GraphicsContext*);
 typedef void (*struct_8085E9B0_unk_106B8)(struct GraphicsContext*, struct PreRender*, s32, s32, s32);
 typedef void (*struct_8085E9B0_unk_106BC)(struct GraphicsContext*, struct struct_func_8085C20C_jp_arg1*, f32, f32, s16);

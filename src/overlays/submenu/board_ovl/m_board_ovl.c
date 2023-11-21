@@ -4,6 +4,7 @@
 #include "m_submenu.h"
 #include "z_std_dma.h"
 #include "6B3DC0.h"
+#include "6F5550.h"
 
 #include "code_variables.h"
 
@@ -26,8 +27,12 @@ void func_8088910C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->moveMove(submenu, arg1);
 }
 
-void func_8088913C_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088913C_jp.s")
+void func_8088913C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    if (getTrigger() & (A_BUTTON | B_BUTTON | START_BUTTON)) {
+        submenu->unk_2C->moveChgBase(arg1, 4);
+        func_800D1A9C_jp(0x5F);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889198_jp.s")
 

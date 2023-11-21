@@ -1318,7 +1318,7 @@ void func_8085D43C_jp(Submenu* submenu, void** arg1, struct_func_8085D43C_jp_arg
     submenu->unk_2C->unk_10000.unk_00 = (void*)ALIGN16((uintptr_t)size + (uintptr_t)temp_a0);
 }
 
-void mSM_move_chg_base(struct_mSM_move_chg_base_arg0* arg0, u32 arg1) {
+void mSM_move_chg_base(struct_mSM_move_Move_arg1* arg0, u32 arg1) {
     arg0->unk_04 = 0;
     arg0->unk_34 = arg1;
     if (arg1 & 1) {

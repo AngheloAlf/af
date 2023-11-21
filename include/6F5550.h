@@ -16,7 +16,7 @@ struct Game_Play_Unk_1EE8;
 // void func_800D1A24_jp();
 // void func_800D1A4C_jp();
 // void func_800D1A74_jp();
-// void func_800D1A9C_jp();
+void func_800D1A9C_jp(s32 arg0);
 // void func_800D1AC4_jp();
 // void func_800D1B00_jp();
 // void func_800D1B3C_jp();
