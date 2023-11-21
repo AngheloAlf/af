@@ -1,5 +1,6 @@
 #include "m_board_ovl.h"
 
+#include "libc/math.h"
 #include "segment_symbols.h"
 #include "m_submenu.h"
 #include "z_std_dma.h"
@@ -19,7 +20,55 @@ extern Gfx D_C000158[]; // lat_letter_sen_mode
 extern Gfx D_C000040[];
 extern Gfx D_C0001C0[];
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80888E90_jp.s")
+void mBD_roll_control(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    struct_8085E9B0_unk_106E0* temp_t0 = submenu->unk_2C->unk_106E0;
+    struct_8085E9B0_unk_106E4* temp_a2 = submenu->unk_2C->unk_106E4;
+    f32 temp_fa0;
+    f32 temp_fv0;
+    s32 temp_a0;
+    s32 var_v1;
+    f32 temp;
+
+    if (temp_t0 == NULL) {
+        return;
+    }
+
+    if (temp_a2->unk_00 == 1) {
+        var_v1 = temp_t0->unk_22 + 2;
+    } else {
+        var_v1 = (temp_a2->unk_00 == 0) ? 0 : 9;
+    }
+
+    temp_a0 = var_v1 - temp_a2->unk_01;
+    if (temp_a0 < -2) {
+        temp_a2->unk_01 = var_v1 + 2;
+        arg1->unk_20[1] = 1.0f;
+    } else if (temp_a0 > 2) {
+        temp_a2->unk_01 = var_v1 - 2;
+        arg1->unk_20[1] = 1.0f;
+    }
+
+    temp_fa0 = (f32) ((temp_a2->unk_01 * 0x10) - 0x20);
+
+    temp = temp_fa0 - arg1->unk_18[1];
+    temp_fv0 = fabsf(temp);
+    if (temp_fv0 > 0.1f) {
+        if (temp_fv0 > 9.0f) {
+            arg1->unk_20[1] *= 2.0f;
+            if (arg1->unk_20[1] > 4.0f) {
+                arg1->unk_20[1] = 4.0f;
+            }
+        } else if (temp_fv0 < 7.0f) {
+            arg1->unk_20[1] *= 0.5f;
+            if (arg1->unk_20[1] < 1.0f) {
+                arg1->unk_20[1] = 1.0f;
+            }
+        }
+        chase_f(&arg1->unk_18[1], temp_fa0, arg1->unk_20[1]);
+    } else {
+        arg1->unk_18[1] = temp_fa0;
+    }
+}
 
 void mBD_roll_control2(struct_mSM_move_Move_arg1* arg0) {
     f32 temp_fv0 = arg0->unk_18[1] - arg0->unk_20[1];
@@ -69,8 +118,20 @@ void mBD_end_board(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->returnFunc(submenu, sp1C);
 }
 
+#if 0
+void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    if (submenu->unk_2C->unk_100D0[0x288].unk_30 == 4) {
+        arg1->unk_04 = 3;
+        submenu->unk_2C->unk_106E4->unk_01 = 2;
+        mSM_open_submenu(submenu, SUBMENU_PROGRAM_15, 0, 0);
+        return;
+    }
+    mBD_roll_control(arg1);
+}
+#else
 void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Play.s")
+#endif
 
 #if 0
 void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {

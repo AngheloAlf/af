@@ -1643,7 +1643,7 @@ D_80888B20_jp = 0x80888B20; //
 
 // .text
 
-func_80888E90_jp = 0x80888E90; // type:func
+mBD_roll_control = 0x80888E90; // type:func
 mBD_roll_control2 = 0x80889028; // type:func
 mBD_move_Move = 0x8088910C; // type:func
 mBD_move_Wait = 0x8088913C; // type:func
