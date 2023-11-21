@@ -29,18 +29,6 @@ typedef struct SubmenuProgramOverlay {
     /* 0x1C */ s32 unk_1C;
 } SubmenuProgramOverlay; // size = 0x20
 
-typedef struct struct_mSM_return_func_arg1 {
-    /* 0x00 */ UNK_TYPE1 unk_00[0x4];
-    /* 0x04 */ UNK_TYPE unk_04;
-    /* 0x08 */ UNK_TYPE unk_08;
-    /* 0x0C */ struct_8085E9B0_unk_10670_unk_00 unk_0C;
-    /* 0x10 */ struct_8085E9B0_unk_10670_unk_04 unk_10;
-    /* 0x14 */ UNK_TYPE unk_14;
-    /* 0x18 */ UNK_TYPE1 unk_18[0x14];
-    /* 0x2C */ UNK_TYPE unk_2C;
-    /* 0x30 */ UNK_TYPE unk_30;
-} struct_mSM_return_func_arg1; // size >= 0x34
-
 typedef struct struct_func_8085C20C_jp_arg1 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x4];
     /* 0x04 */ u16 unk_04;
@@ -54,14 +42,14 @@ typedef struct struct_func_8085C20C_jp_arg1 {
 typedef struct struct_mSM_move_Move_arg1 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x4];
     /* 0x04 */ s32 unk_04;
-    /* 0x08 */ UNK_TYPE1 unk_08[0x4];
-    /* 0x0C */ UNK_FUN_PTR unk_0C;
-    /* 0x10 */ UNK_FUN_PTR unk_10;
-    /* 0x14 */ UNK_TYPE1 unk_14[0x4];
+    /* 0x08 */ s32 unk_08; // SubmenuProgramId enum, not used directly to avoid possible circular dependencies
+    /* 0x0C */ struct_8085E9B0_unk_10670_unk_00 unk_0C;
+    /* 0x10 */ struct_8085E9B0_unk_10670_unk_04 unk_10;
+    /* 0x14 */ UNK_TYPE unk_14;
     /* 0x18 */ f32 unk_18[2];
     /* 0x20 */ f32 unk_20[2];
     /* 0x28 */ void* unk_28;
-    /* 0x28 */ UNK_TYPE1 unk_2C[0x4];
+    /* 0x2C */ UNK_TYPE4 unk_2C;
     /* 0x30 */ UNK_TYPE4 unk_30;
     /* 0x34 */ u32 unk_34;
     /* 0x38 */ s32 unk_38;
@@ -146,9 +134,9 @@ typedef struct struct_8085E9B0_unk_106E0 {
     /* 0x2C */ struct_8085E9B0_unk_106E0_unk_2C unk_2C;
 } struct_8085E9B0_unk_106E0; // size >= 0x30
 
-typedef void (*struct_8085E9B0_unk_106A4)(struct Submenu*, struct_mSM_return_func_arg1*);
+typedef void (*struct_8085E9B0_unk_106A4)(struct Submenu*, struct_mSM_move_Move_arg1*);
 typedef void (*struct_8085E9B0_unk_106A8)(struct Submenu*, struct_mSM_move_Move_arg1*);
-typedef void (*struct_8085E9B0_unk_106AC)(struct Submenu*, struct_mSM_return_func_arg1*);
+typedef void (*struct_8085E9B0_unk_106AC)(struct Submenu*, struct_mSM_move_Move_arg1*);
 typedef void (*struct_8085E9B0_unk_106B0)(struct_mSM_move_Move_arg1*, u32);
 typedef void (*struct_8085E9B0_unk_106B4)(struct GraphicsContext*);
 typedef void (*struct_8085E9B0_unk_106B8)(struct GraphicsContext*, struct PreRender*, s32, s32, s32);

@@ -1402,7 +1402,7 @@ void mSM_tex_move(Submenu* submenu) {
 }
 
 #ifdef NON_EQUIVALENT
-void mSM_return_func(Submenu* submenu, struct_mSM_return_func_arg1* arg1) {
+void mSM_return_func(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     struct_8085E9B0_unk_10088* temp_v0;
     struct_8085E9B0* temp_v1;
     struct_8085E9B0_unk_10088* othertemp;
@@ -1457,7 +1457,7 @@ void mSM_return_func(Submenu* submenu, struct_mSM_return_func_arg1* arg1) {
     arg1->unk_30 = 0;
 }
 #else
-void mSM_return_func(Submenu* submenu, struct_mSM_return_func_arg1* arg1);
+void mSM_return_func(Submenu* submenu, struct_mSM_move_Move_arg1* arg1);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/submenu_ovl/m_submenu_ovl/mSM_return_func.s")
 #endif
 
@@ -1508,7 +1508,7 @@ void mSM_move_Move(UNUSED Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
 /**
  * Original name: mSM_move_End
  */
-void mSM_ovl_move_End(Submenu* submenu, struct_mSM_return_func_arg1* arg1) {
+void mSM_ovl_move_End(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     mSM_return_func(submenu, arg1);
 }
 

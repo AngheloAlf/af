@@ -39,11 +39,93 @@ void func_8088913C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
 void func_8088920C_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088920C_jp.s")
 
+#if 0
+//? func_80889028_jp(struct_mSM_move_Move_arg1*);     /* extern */
+//? func_80889198_jp(Submenu*, struct_mSM_move_Move_arg1*); /* extern */
+
+void func_80889288_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    s8* sp5C;
+    struct_8085E9B0_unk_106E0* sp54;
+    MailHeaderCommon* sp50;
+    s32 sp4C;
+    s32 sp48;
+    s32 sp44;
+    u8* sp40;
+    u8 sp2C;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+    s32 temp_v0_4;
+    s32 var_v0;
+    s8* temp_v1;
+    struct_8085E9B0* temp_v0;
+    struct_8085E9B0_unk_106E4* temp_s0;
+    u8* var_a3;
+
+    temp_v0 = submenu->unk_2C;
+    temp_s0 = temp_v0->unk_106E4;
+    temp_v1 = &temp_v0->unk_1042C[0x94];
+    sp5C = temp_v1;
+    func_80889028_jp(arg1);
+    if ((temp_v1->unk_4 == 0) && (temp_v1->unk_30 == 4)) {
+        sp54 = submenu->unk_2C->unk_106E0;
+        temp_v0_2 = temp_v1->unk_3C;
+        if (temp_v0_2 == 0) {
+            sp50 = &common_data.privateInfo->unk_3EE;
+            mMl_copy_mail(temp_s0->unk_AC, &temp_s0->unk_08);
+            temp_v0_3 = mMl_strlen(&temp_s0->unk_08.unk_2A.unk_6A, 0x10, 0x20);
+            sp48 = temp_s0->unk_07 - temp_v0_3;
+            sp4C = temp_v0_3;
+            mem_copy(&sp2C, (u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
+            var_a3 = &sp2C;
+            var_v0 = 0;
+            if (sp4C > 0) {
+loop_5:
+                if (*var_a3 == 0x20) {
+                    var_v0 += 1;
+                    var_a3 += 1;
+                    if (var_v0 != sp4C) {
+                        goto loop_5;
+                    }
+                }
+            }
+            sp40 = var_a3;
+            sp44 = var_v0;
+            mem_clear((u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U, 0x20U);
+            if (sp48 < 0x10) {
+                mem_copy((u8* ) (&temp_s0->unk_AC->unk_00.unk_00.unk_0.unk_0[sp48] + 0x94), var_a3, sp4C - var_v0);
+            }
+            sp50->unk_00 = (s8) temp_s0->unk_08.unk_27;
+            mem_copy(sp50->unk_02, &temp_s0->unk_AC->unk_2A.unk_0, 0xAU);
+            mem_copy(sp50->unk_0C, (u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
+            temp_v0_4 = arg1->unk_3C;
+            if (temp_v0_4 != -1) {
+                mPr_SetPossessionItem(common_data.privateInfo, temp_v0_4, 0U, 0U);
+                submenu->unk_2C->unk_106D0->unk_10C(submenu);
+            }
+            func_80889198_jp(submenu, arg1);
+        } else if (temp_v0_2 == 1) {
+            mSM_open_submenu_new(submenu, SUBMENU_PROGRAM_10, 0, 0, (s32) &temp_s0->unk_08.unk_2A.unk_A);
+            temp_s0->unk_00 = 1;
+            temp_s0->unk_02 = 0;
+            arg1->unk_04 = 1;
+        } else {
+            func_80889198_jp(submenu, arg1);
+        }
+        if (sp54 != NULL) {
+            sp54->unk_16 = 0;
+            sp54->unk_20 = 0;
+            sp54->unk_22 = 0;
+        }
+    }
+}
+#else
 void func_80889288_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889288_jp.s")
+#endif
 
-void func_808894E4_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_808894E4_jp.s")
+void func_808894E4_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    submenu->unk_2C->moveEnd(submenu, arg1);
+}
 
 typedef void (*struct_8088ABA4_jp)(Submenu* submenu, struct_mSM_move_Move_arg1*);
 
@@ -53,7 +135,6 @@ extern struct_8088ABA4_jp D_8088ABA4_jp[];
 void mBD_board_ovl_move(Submenu* submenu) {
     struct_mSM_move_Move_arg1* temp_a1 = &submenu->unk_2C->unk_103E8;
 
-    // TODO: This can be either (submenu) or (submenu, temp_a1)
     temp_a1->unk_0C(submenu);
 
     D_8088ABA4_jp[temp_a1->unk_04](submenu, temp_a1);
@@ -331,7 +412,6 @@ void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg
 void mBD_board_ovl_draw(Submenu* submenu, struct Game_Play* game_play) {
     struct_mSM_move_Move_arg1* temp_a2 = &submenu->unk_2C->unk_103E8;
 
-    // TODO: this can be either (submenu, game_play) or (submenu, game_play, temp_a2)
     temp_a2->unk_10(submenu, game_play);
     if (submenu->unk_2C->unk_106E4->unk_B8 != 0) {
         mBD_set_dl(submenu, game_play, temp_a2);
