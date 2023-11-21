@@ -22,25 +22,31 @@ extern Gfx D_C0001C0[];
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889028_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088910C_jp.s")
+void func_8088910C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
+    submenu->unk_2C->moveMove(submenu, arg1);
+}
 
+void func_8088913C_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088913C_jp.s")
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889198_jp.s")
 
+void func_8088920C_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088920C_jp.s")
 
+void func_80889288_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889288_jp.s")
 
+void func_808894E4_jp(Submenu* submenu, struct_mSM_move_Move_arg1*);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_808894E4_jp.s")
 
-typedef void (*struct_8088ABA4_jp)(Submenu* submenu, struct_8085E9B0_unk_103E8*);
+typedef void (*struct_8088ABA4_jp)(Submenu* submenu, struct_mSM_move_Move_arg1*);
 
 // ovl_move_proc$573 ?
 extern struct_8088ABA4_jp D_8088ABA4_jp[];
 
 void mBD_board_ovl_move(Submenu* submenu) {
-    struct_8085E9B0_unk_103E8* temp_a1 = &submenu->unk_2C->unk_103E8;
+    struct_mSM_move_Move_arg1* temp_a1 = &submenu->unk_2C->unk_103E8;
 
     // TODO: This can be either (submenu) or (submenu, temp_a1)
     temp_a1->unk_0C(submenu);
@@ -48,7 +54,7 @@ void mBD_board_ovl_move(Submenu* submenu) {
     D_8088ABA4_jp[temp_a1->unk_04](submenu, temp_a1);
 }
 
-void mBD_set_frame_dl(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
+void mBD_set_frame_dl(GraphicsContext* gfxCtx, struct_mSM_move_Move_arg1* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
     s32 sp34 = arg4->unk_08.unk_29;
 
     gSegments[0xC] = OS_K0_TO_PHYSICAL(arg1->unk_28);
@@ -160,26 +166,15 @@ typedef struct struct_8088AAA4_jp {
     /* 0x3 */ u8 unk_3;
 } struct_8088AAA4_jp; // size = 0x4
 
-#if 0
-//f32 func_80090E98_jp(Game_Play*, f32, f32, char*, u8, f32, f32, s32, s32, s32, s32, s32, s32, f32, f32); /* extern */
-
 void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4) {
-    f32 temp_fa0;
-    struct_8085E9B0_unk_106E4* temp_v0;
-    u8 temp_a2;
+    struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
 
-    temp_v0 = submenu->unk_2C->unk_106E4;
-    temp_a2 = temp_v0->unk_07;
-    temp_fa0 = arg2 + (12.0f * (f32) (0x10 - temp_a2));
-    func_80090E98_jp(temp_fa0, arg3, game_play, &temp_v0->unk_08.unk_2A.unk_6A, temp_a2, temp_fa0, arg3, arg4->unk_0, arg4->unk_1, arg4->unk_2, 0xFF, 0, 0, 1.0f);
+    arg2 += 12.0f * (0x10 - temp_v0->unk_07);
+    func_80090E98_jp(game_play, &temp_v0->unk_08.unk_2A.unk_6A, temp_v0->unk_07, arg2, arg3, arg4->unk_0, arg4->unk_1, arg4->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
 }
-#else
-void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_808899E4_jp.s")
-#endif
 
 #ifdef NON_EQUIVALENT
-void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7) {
+void func_80889A9C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7) {
     s32 var_s0;
     s32 var_s4;
     s32 var_s6;
@@ -233,17 +228,61 @@ void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Pl
     }
 }
 #else
-void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7);
+void func_80889A9C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889A9C_jp.s")
 #endif
 
-void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5);
+#if 0
+void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5) {
+    char sp68[0xA];
+    f32 temp_fs0;
+    s32 var_s2_2;
+    struct_8085E9B0_unk_106E4* temp_s1;
+    u8 temp_v0;
+    u8 var_s2;
+
+    temp_s1 = submenu->unk_2C->unk_106E4;
+    if (arg2->unk_04 == 1) {
+        if (temp_s1->unk_00 == 0) {
+            var_s2 = 6;
+        } else {
+            var_s2 = temp_s1->unk_03;
+        }
+
+        func_80090E98_jp(game_play, &temp_s1->unk_08.unk_2A.unk_00[0], temp_s1->unk_08.unk_27, arg3, arg4, (s32) arg5->unk_0, (s32) arg5->unk_1, (s32) arg5->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
+
+        temp_fs0 = arg3 + ((f32) temp_s1->unk_08.unk_27 * 12.0f);
+        func_80090E98_jp(game_play, &temp_s1->unk_08.unk_00.unk_00.unk_0.unk_0[0], (s32) var_s2, temp_fs0, arg4, 0xB9, 0, 0, 0xFF, 0, 0, 1.0f, 1.0f, 0);
+
+        if (temp_s1->unk_08.unk_27 < 0xA) {
+            func_80090E98_jp(game_play, (s8* ) (&temp_s1->unk_08.unk_2A.unk_00[temp_s1->unk_08.unk_27]), temp_s1->unk_05 - temp_s1->unk_08.unk_27, temp_fs0 + ((f32) var_s2 * 12.0f), arg4, (s32) arg5->unk_0, (s32) arg5->unk_1, (s32) arg5->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
+        }
+    } else {
+        temp_v0 = temp_s1->unk_08.unk_28;
+        if ((temp_v0 == 2) || (temp_v0 == 3) || (temp_v0 == 5)) {
+            mem_copy(&sp68, &temp_s1->unk_08.unk_2A.unk_00, 0xAU);
+            var_s2_2 = 0xA;
+        } else {
+            mem_copy(&sp68, &temp_s1->unk_08.unk_2A.unk_00, (u32) temp_s1->unk_08.unk_27);
+            mem_copy(&sp68[temp_s1->unk_08.unk_27], (u8* ) &temp_s1->unk_08, (u32) temp_s1->unk_03);
+
+            if (temp_s1->unk_08.unk_27 < 0xA) {
+                mem_copy(&sp68[temp_s1->unk_03 + temp_s1->unk_08.unk_27], &temp_s1->unk_08.unk_2A.unk_00[temp_s1->unk_08.unk_27], temp_s1->unk_05 - temp_s1->unk_08.unk_27);
+            }
+            var_s2_2 = temp_s1->unk_05 + temp_s1->unk_03;
+        }
+        func_80090E98_jp(game_play, sp68, var_s2_2, arg3, arg4, (s32) arg5->unk_0, (s32) arg5->unk_1, (s32) arg5->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
+    }
+}
+#else
+void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889CD8_jp.s")
+#endif
 
 extern struct_8088AAA4_jp D_8088AAA4_jp[];
 
 #if 0
-void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4) {
+void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4) {
     f32 sp40;
     f32 sp3C;
     f32 sp38;
@@ -268,14 +307,14 @@ void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_un
     }
 }
 #else
-void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8*, f32, f32);
+void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1*, f32, f32);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889FB0_jp.s")
 #endif
 
-void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2) {
+void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
-    f32 sp30 = arg2->unk_18;
-    f32 sp2C = arg2->unk_1C;
+    f32 sp30 = arg2->unk_18[0];
+    f32 sp2C = arg2->unk_18[1];
 
     mBD_set_frame_dl(gfxCtx, arg2, sp30, sp2C, submenu->unk_2C->unk_106E4);
     if ((arg2->unk_38 == 1) || (submenu->unk_2C->unk_106E4->unk_04 == 0)) {
@@ -285,7 +324,7 @@ void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E
 }
 
 void mBD_board_ovl_draw(Submenu* submenu, struct Game_Play* game_play) {
-    struct_8085E9B0_unk_103E8* temp_a2 = &submenu->unk_2C->unk_103E8;
+    struct_mSM_move_Move_arg1* temp_a2 = &submenu->unk_2C->unk_103E8;
 
     // TODO: this can be either (submenu, game_play) or (submenu, game_play, temp_a2)
     temp_a2->unk_10(submenu, game_play);
@@ -307,7 +346,7 @@ extern u8 D_8088ABBC_jp;
 
 // regalloc
 void func_8088A2D0_jp(Submenu* arg0) {
-    struct_8085E9B0_unk_103E8* temp_v1 = &arg0->unk_2C->unk_103E8; // sp5C
+    struct_mSM_move_Move_arg1* temp_v1 = &arg0->unk_2C->unk_103E8; // sp5C
     struct_8085E9B0_unk_106E4* temp_s0 = arg0->unk_2C->unk_106E4;
 
     arg0->unk_2C->unk_106A0 = 0;

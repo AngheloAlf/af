@@ -54,13 +54,20 @@ typedef struct struct_func_8085C20C_jp_arg1 {
 typedef struct struct_mSM_move_Move_arg1 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x4];
     /* 0x04 */ s32 unk_04;
-    /* 0x08 */ UNK_TYPE1 unk_08[0x10];
+    /* 0x08 */ UNK_TYPE1 unk_08[0x4];
+    /* 0x0C */ UNK_FUN_PTR unk_0C;
+    /* 0x10 */ UNK_FUN_PTR unk_10;
+    /* 0x14 */ UNK_TYPE1 unk_14[0x4];
     /* 0x18 */ f32 unk_18[2];
     /* 0x20 */ f32 unk_20[2];
-    /* 0x28 */ UNK_TYPE1 unk_28[0x8];
+    /* 0x28 */ void* unk_28;
+    /* 0x28 */ UNK_TYPE1 unk_2C[0x4];
     /* 0x30 */ UNK_TYPE4 unk_30;
     /* 0x34 */ UNK_TYPE4 unk_34;
-} struct_mSM_move_Move_arg1; // size >= 0x38
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ s32 unk_3C;
+    /* 0x40 */ Mail* unk_40;
+} struct_mSM_move_Move_arg1; // size >= 0x44
 
 typedef struct struct_mSM_move_chg_base_arg0 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x4];
@@ -101,26 +108,6 @@ typedef struct struct_8085E9B0_unk_10088 {
     /* 0x40 */ UNK_TYPE4 unk_40;
     /* 0x44 */ UNK_TYPE4 unk_44;
 } struct_8085E9B0_unk_10088; // size = 0x48
-
-// TODO: Specific to m_board_ovl.c?
-typedef struct struct_8085E9B0_unk_103E8 {
-    /* 0x00 */ UNK_TYPE1 unk_00[0x4];
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ UNK_TYPE1 unk_08[0x4];
-    /* 0x0C */ UNK_FUN_PTR unk_0C;
-    /* 0x10 */ UNK_FUN_PTR unk_10;
-    /* 0x14 */ UNK_TYPE1 unk_14[0x4];
-    /* 0x18 */ f32 unk_18;
-    /* 0x1C */ f32 unk_1C;
-    /* 0x20 */ UNK_TYPE1 unk_20[0x8];
-    /* 0x28 */ void* unk_28;
-    /* 0x28 */ UNK_TYPE1 unk_2C[0x4];
-    /* 0x30 */ UNK_TYPE4 unk_30;
-    /* 0x34 */ UNK_TYPE4 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ s32 unk_3C;
-    /* 0x40 */ Mail* unk_40;
-} struct_8085E9B0_unk_103E8; // size >= 0x44
 
 typedef struct struct_8085E9B0_unk_10670 {
     /* 0x00 */ struct_8085E9B0_unk_10670_unk_00 unk_00;
@@ -185,7 +172,7 @@ typedef struct struct_8085E9B0 {
     /* 0x1006C */ UNK_TYPE1 unk_1006C[0x1C];
     /* 0x10088 */ struct_8085E9B0_unk_10088 unk_10088[UNK_SIZE];
     /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x318];
-    /* 0x103E8 */ struct_8085E9B0_unk_103E8 unk_103E8;
+    /* 0x103E8 */ struct_mSM_move_Move_arg1 unk_103E8;
     /* 0x1042C */ UNK_TYPE1 unk_1042C[0x244];
     /* 0x10670 */ struct_8085E9B0_unk_10670 unk_10670;
     /* 0x106A0 */ UNK_TYPE4 unk_106A0;
