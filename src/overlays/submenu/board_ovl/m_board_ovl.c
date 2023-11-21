@@ -10,10 +10,10 @@
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/submenu/submenu_ovl/m_submenu_ovl.h"
 
-extern Gfx* D_8088A7A0_jp[];
-extern Gfx* D_8088A8A0_jp[];
-extern Gfx D_C000120[];
-extern Gfx D_C000158[];
+extern Gfx* D_8088A7A0_jp[]; // lbl_806c7c60
+extern Gfx* D_8088A8A0_jp[]; // lbl_806c8060
+extern Gfx D_C000120[]; // lat_letter_mode
+extern Gfx D_C000158[]; // lat_letter_sen_mode
 
 extern Gfx D_C000040[];
 extern Gfx D_C0001C0[];
@@ -48,7 +48,7 @@ void mBD_board_ovl_move(Submenu* submenu) {
     D_8088ABA4_jp[temp_a1->unk_04](submenu, temp_a1);
 }
 
-void func_80889574_jp(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
+void mBD_set_frame_dl(GraphicsContext* gfxCtx, struct_8085E9B0_unk_103E8* arg1, f32 arg2, f32 arg3, struct_8085E9B0_unk_106E4* arg4) {
     s32 sp34 = arg4->unk_08.unk_29;
 
     gSegments[0xC] = OS_K0_TO_PHYSICAL(arg1->unk_28);
@@ -277,7 +277,7 @@ void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E
     f32 sp30 = arg2->unk_18;
     f32 sp2C = arg2->unk_1C;
 
-    func_80889574_jp(gfxCtx, arg2, sp30, sp2C, submenu->unk_2C->unk_106E4);
+    mBD_set_frame_dl(gfxCtx, arg2, sp30, sp2C, submenu->unk_2C->unk_106E4);
     if ((arg2->unk_38 == 1) || (submenu->unk_2C->unk_106E4->unk_04 == 0)) {
         submenu->unk_2C->setCharMatrix(gfxCtx);
         func_80889FB0_jp(submenu, game_play, arg2, sp30, sp2C);
