@@ -3,6 +3,7 @@
 #include "segment_symbols.h"
 #include "m_submenu.h"
 #include "z_std_dma.h"
+#include "6B3DC0.h"
 
 #include "code_variables.h"
 
@@ -152,16 +153,94 @@ void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889878_jp.s")
 #endif
 
-void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, UNK_TYPE4* arg4);
+typedef struct struct_8088AAA4_jp {
+    /* 0x0 */ u8 unk_0;
+    /* 0x1 */ u8 unk_1;
+    /* 0x2 */ u8 unk_2;
+    /* 0x3 */ u8 unk_3;
+} struct_8088AAA4_jp; // size = 0x4
+
+#if 0
+//f32 func_80090E98_jp(Game_Play*, f32, f32, char*, u8, f32, f32, s32, s32, s32, s32, s32, s32, f32, f32); /* extern */
+
+void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4) {
+    f32 temp_fa0;
+    struct_8085E9B0_unk_106E4* temp_v0;
+    u8 temp_a2;
+
+    temp_v0 = submenu->unk_2C->unk_106E4;
+    temp_a2 = temp_v0->unk_07;
+    temp_fa0 = arg2 + (12.0f * (f32) (0x10 - temp_a2));
+    func_80090E98_jp(temp_fa0, arg3, game_play, &temp_v0->unk_08.unk_2A.unk_6A, temp_a2, temp_fa0, arg3, arg4->unk_0, arg4->unk_1, arg4->unk_2, 0xFF, 0, 0, 1.0f);
+}
+#else
+void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_808899E4_jp.s")
+#endif
 
-void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, UNK_TYPE4* arg7);
+#ifdef NON_EQUIVALENT
+void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7) {
+    s32 var_s0;
+    s32 var_s4;
+    s32 var_s6;
+    struct_8085E9B0_unk_106E4* temp_v0;
+    s32 var_s1;
+    char* var_s5;
+    char* var_v0;
+
+    temp_v0 = submenu->unk_2C->unk_106E4;
+
+    var_s5 = temp_v0->unk_08.unk_2A.unk_0A;
+    var_s1 = temp_v0->unk_06;
+    for (var_s6 = 0; var_s6 < 6; var_s6++) {
+        var_s4 = 0;
+
+        for (var_s0 = 0, var_v0 = var_s5; (var_s0 < 0x10) && (var_s0 < var_s1); var_s0++, var_v0++) {
+            if (*var_v0 == 0xCD) {
+                var_s0 += 1;
+                var_s4 = 1;
+                break;
+            }
+        }
+
+        if (var_s0 != 0) {
+            s32 var_a2;
+
+            if ((var_s4 != 0) && (arg1->unk_04 != 1)) {
+                var_a2 = var_s0 - 1;
+            } else {
+                var_a2 = var_s0;
+            }
+
+            if (var_a2 != 0) {
+                func_80090E98_jp(game_play, var_s5, var_a2, arg3, *arg4, arg7->unk_0, arg7->unk_1, arg7->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
+            }
+
+            var_s1 -= var_s0;
+            var_s5 = &var_s5[var_s0];
+            if (var_s1 == 0) {
+                if ((var_s6 != 5) && ((var_s4 != 0) || (var_s0 == 0x10))) {
+                    *arg5 = arg3 - 160.0f;
+                    *arg6 = 120.0f - (*arg4 + 16.0f);
+                } else {
+                    *arg5 = ((var_s0 * 12.0f) + arg3) - 160.0f;
+                    *arg6 = 120.0f - *arg4;
+                }
+            }
+        }
+
+        *arg4 += 16.0f;
+    }
+}
+#else
+void func_80889A9C_jp(Submenu* submenu, struct_8085E9B0_unk_103E8* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889A9C_jp.s")
+#endif
 
-void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4, UNK_TYPE4* arg5);
+void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889CD8_jp.s")
 
-extern UNK_TYPE4 D_8088AAA4_jp[];
+extern struct_8088AAA4_jp D_8088AAA4_jp[];
 
 #if 0
 void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_8085E9B0_unk_103E8* arg2, f32 arg3, f32 arg4) {

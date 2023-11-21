@@ -3,6 +3,8 @@
 
 #include "ultra64.h"
 
+struct Game_Play;
+
 // void func_80090120_jp();
 // void func_80090130_jp();
 // void func_80090140_jp();
@@ -26,7 +28,7 @@
 // void func_8009087C_jp();
 // void func_80090CC0_jp();
 // void mFont_SetLineStrings_AndSpace();
-// void func_80090E98_jp();
+f32 func_80090E98_jp(struct Game_Play* game_play, char* arg1, s32 arg2, f32 arg3, f32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 argA, f32 argB, f32 argC, s32 argD);
 // void mFont_SetMatrix();
 // void mFont_UnSetMatrix();
 // void func_80091074_jp();
