@@ -280,17 +280,13 @@ void mBD_set_point(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
     CLOSE_DISPS(gfxCtx);
 }
 
-#if 0
 void mBD_set_cursol(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
+    struct_8085E9B0_unk_106E0* temp_t0 = submenu->unk_2C->unk_106E0;
+    struct_8085E9B0_unk_106E4* temp_v1 = submenu->unk_2C->unk_106E4;
     f32 var_fa0;
     f32 var_fv0;
     f32 var_fv1;
     s32 var_v0;
-    struct_8085E9B0_unk_106E0* temp_t0;
-    struct_8085E9B0_unk_106E4* temp_v1;
-
-    temp_t0 = submenu->unk_2C->unk_106E0;
-    temp_v1 = submenu->unk_2C->unk_106E4;
 
     if (temp_v1->unk_02 == 1) {
         mBD_set_point(submenu, game_play, arg2, arg3);
@@ -302,24 +298,21 @@ void mBD_set_cursol(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) 
         if (temp_v1->unk_02 == 2) {
             var_v0 += 6;
         }
-        var_fa0 = 0.0f;
+        var_fv0 = var_v0 + 0.3f;
         var_fv1 = 0.0f;
-        var_fv0 = (f32) var_v0 + 0.3f;
+        var_fa0 = 0.0f;
     } else if (temp_v1->unk_00 == 1) {
+        var_fv0 = var_v0 + 0.3f;
         var_fa0 = 12.0f;
-        var_fv0 = (f32) var_v0 + 0.3f;
-        var_fv1 = (f32) (temp_t0->unk_22 + 1);
+        var_fv1 = temp_t0->unk_22 + 1;
     } else {
-        var_fa0 = 24.0f;
+        var_fv0 = var_v0 - temp_v1->unk_07 + 0x10 + 0.3f;
         var_fv1 = 7.0f;
-        var_fv0 = (f32) ((var_v0 - temp_v1->unk_07) + 0x10) + 0.3f;
+        var_fa0 = 24.0f;
     }
-    temp_t0->unk_2C(var_fa0, submenu, 64.0f + arg2 + (var_fv0 * 12.0f), 36.0f - ((arg3 - (var_fv1 * 16.0f)) - var_fa0));
+
+    submenu->unk_2C->unk_106E0->unk_2C(submenu, game_play, 64.0f + arg2 + (var_fv0 * 12.0f), 36.0f - ((arg3 - (var_fv1 * 16.0f)) - var_fa0));
 }
-#else
-void mBD_set_cursol(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_cursol.s")
-#endif
 
 typedef struct struct_8088AAA4_jp {
     /* 0x0 */ u8 unk_0;

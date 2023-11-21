@@ -137,7 +137,7 @@ typedef struct struct_8085E9B0_unk_106E4 {
 } struct_8085E9B0_unk_106E4; // size = 0xC0
 
 typedef UNK_RET (*struct_8085E9B0_unk_106E0_unk_28)(struct Submenu*, struct Game_Play*, f32, f32);
-typedef UNK_RET (*struct_8085E9B0_unk_106E0_unk_2C)(f32, struct Submenu*, f32, f32);
+typedef UNK_RET (*struct_8085E9B0_unk_106E0_unk_2C)(struct Submenu*, struct Game_Play*, f32, f32);
 
 typedef struct struct_8085E9B0_unk_106E0 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x14];
