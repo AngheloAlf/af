@@ -89,6 +89,11 @@ typedef struct struct_8085E9B0_unk_10088 {
     /* 0x44 */ UNK_TYPE4 unk_44;
 } struct_8085E9B0_unk_10088; // size = 0x48
 
+typedef struct struct_8085E9B0_unk_10358 {
+    /* 0x00 */ UNK_TYPE1 unk_00[0x30];
+    /* 0x30 */ s32 unk_30;
+} struct_8085E9B0_unk_10358; // size >= 0x34
+
 typedef struct struct_8085E9B0_unk_10670 {
     /* 0x00 */ struct_8085E9B0_unk_10670_unk_00 unk_00;
     /* 0x04 */ struct_8085E9B0_unk_10670_unk_04 unk_04;
@@ -151,7 +156,9 @@ typedef struct struct_8085E9B0 {
     /* 0x10000 */ struct_8085E9B0_unk_10000 unk_10000;
     /* 0x1006C */ UNK_TYPE1 unk_1006C[0x1C];
     /* 0x10088 */ struct_8085E9B0_unk_10088 unk_10088[UNK_SIZE];
-    /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x318];
+    /* 0x100D0 */ UNK_TYPE1 unk_100D0[0x288];
+    /* 0x10358 */ struct_8085E9B0_unk_10358 unk_10358;
+    /* 0x1038C */ UNK_TYPE1 unk_1038C[0x5C];
     /* 0x103E8 */ struct_mSM_move_Move_arg1 unk_103E8;
     /* 0x1042C */ UNK_TYPE1 unk_1042C[0x4];
     /* 0x10430 */ struct_mSM_move_Move_arg1 unk_10430;

@@ -118,20 +118,17 @@ void mBD_end_board(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->returnFunc(submenu, sp1C);
 }
 
-#if 0
 void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
-    if (submenu->unk_2C->unk_100D0[0x288].unk_30 == 4) {
+    struct_8085E9B0_unk_10358* temp = &submenu->unk_2C->unk_10358;
+
+    if (temp->unk_30 == 4) {
         arg1->unk_04 = 3;
         submenu->unk_2C->unk_106E4->unk_01 = 2;
         mSM_open_submenu(submenu, SUBMENU_PROGRAM_15, 0, 0);
-        return;
+    } else {
+        mBD_roll_control(submenu, arg1);
     }
-    mBD_roll_control(arg1);
 }
-#else
-void mBD_move_Play(Submenu* submenu, struct_mSM_move_Move_arg1*);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_move_Play.s")
-#endif
 
 #if 0
 void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
