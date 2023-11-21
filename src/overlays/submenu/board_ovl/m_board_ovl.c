@@ -17,8 +17,8 @@ extern Gfx* D_8088A8A0_jp[]; // lbl_806c8060
 extern Gfx D_C000120[]; // lat_letter_mode
 extern Gfx D_C000158[]; // lat_letter_sen_mode
 
-extern Gfx D_C000040[];
-extern Gfx D_C0001C0[];
+extern Gfx D_C000040[]; // lat_hani_senT_model
+extern Gfx D_C0001C0[]; // lat_point_mT_model
 
 void mBD_roll_control(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     struct_8085E9B0_unk_106E0* temp_t0 = submenu->unk_2C->unk_106E0;
@@ -278,7 +278,7 @@ void mBD_set_frame_dl(GraphicsContext* gfxCtx, struct_mSM_move_Move_arg1* arg1, 
     CLOSE_DISPS(gfxCtx);
 }
 
-void func_8088973C_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
+void mBD_set_point(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
     struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
 
@@ -288,7 +288,6 @@ void func_8088973C_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3
     Matrix_translate(temp_v0->unk_B0, temp_v0->unk_B4, 140.0f, MTXMODE_APPLY);
 
     OPEN_DISPS(gfxCtx);
-
     {
         Gfx* gfx = POLY_OPA_DISP;
         s32 pad;
@@ -300,12 +299,11 @@ void func_8088973C_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3
 
         POLY_OPA_DISP = gfx;
     }
-
     CLOSE_DISPS(gfxCtx);
 }
 
 #if 0
-void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
+void mBD_set_cursol(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
     f32 var_fa0;
     f32 var_fv0;
     f32 var_fv1;
@@ -317,7 +315,7 @@ void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3
     temp_v1 = submenu->unk_2C->unk_106E4;
 
     if (temp_v1->unk_02 == 1) {
-        func_8088973C_jp(submenu, game_play, arg2, arg3);
+        mBD_set_point(submenu, game_play, arg2, arg3);
         return;
     }
 
@@ -341,8 +339,8 @@ void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3
     temp_t0->unk_2C(var_fa0, submenu, 64.0f + arg2 + (var_fv0 * 12.0f), 36.0f - ((arg3 - (var_fv1 * 16.0f)) - var_fa0));
 }
 #else
-void func_80889878_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889878_jp.s")
+void mBD_set_cursol(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3);
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_cursol.s")
 #endif
 
 typedef struct struct_8088AAA4_jp {
@@ -352,7 +350,7 @@ typedef struct struct_8088AAA4_jp {
     /* 0x3 */ u8 unk_3;
 } struct_8088AAA4_jp; // size = 0x4
 
-void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4) {
+void mBD_set_writing_footer(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4) {
     struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
 
     arg2 += 12.0f * (0x10 - temp_v0->unk_07);
@@ -360,7 +358,7 @@ void func_808899E4_jp(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3
 }
 
 #ifdef NON_EQUIVALENT
-void func_80889A9C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7) {
+void mBD_set_writing_body(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7) {
     s32 var_s0;
     s32 var_s4;
     s32 var_s6;
@@ -414,12 +412,12 @@ void func_80889A9C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Pl
     }
 }
 #else
-void func_80889A9C_jp(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889A9C_jp.s")
+void mBD_set_writing_body(Submenu* submenu, struct_mSM_move_Move_arg1* arg1, Game_Play* game_play, f32 arg3, f32* arg4, f32* arg5, f32* arg6, struct_8088AAA4_jp* arg7);
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_writing_body.s")
 #endif
 
 #if 0
-void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5) {
+void mBD_set_writing_header(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5) {
     char sp68[0xA];
     f32 temp_fs0;
     s32 var_s2_2;
@@ -461,14 +459,14 @@ void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Mo
     }
 }
 #else
-void func_80889CD8_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889CD8_jp.s")
+void mBD_set_writing_header(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4, struct_8088AAA4_jp* arg5);
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_writing_header.s")
 #endif
 
 extern struct_8088AAA4_jp D_8088AAA4_jp[];
 
 #if 0
-void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4) {
+void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4) {
     f32 sp40;
     f32 sp3C;
     f32 sp38;
@@ -480,21 +478,21 @@ void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Mo
     temp_ft2 = 36.0f - arg4;
     temp_v1 = &D_8088AAA4_jp[submenu->unk_2C->unk_106E4->unk_08.unk_29];
     sp40 = temp_ft2;
-    func_80889CD8_jp(submenu, game_play, arg2, temp_fv0, temp_ft2, temp_v1);
+    mBD_set_writing_header(submenu, game_play, arg2, temp_fv0, temp_ft2, temp_v1);
     sp40 = sp40 + 28.0f;
     sp3C = temp_fv0 - 160.0f;
     sp38 = 120.0f - sp40;
-    func_80889A9C_jp(submenu, arg2, game_play, temp_fv0, &sp40, &sp3C, &sp38, temp_v1);
+    mBD_set_writing_body(submenu, arg2, game_play, temp_fv0, &sp40, &sp3C, &sp38, temp_v1);
     sp40 = sp40 + 12.0f;
-    func_808899E4_jp(submenu, game_play, temp_fv0, sp40, temp_v1);
+    mBD_set_writing_footer(submenu, game_play, temp_fv0, sp40, temp_v1);
     if ((arg2->unk_04 == 1) && (submenu->unk_2C->unk_106E0 != NULL)) {
-        func_80889878_jp(submenu, game_play, arg3, arg4);
+        mBD_set_cursol(submenu, game_play, arg3, arg4);
         submenu->unk_2C->unk_106E0->unk_28(submenu, game_play, sp3C, sp38);
     }
 }
 #else
-void func_80889FB0_jp(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1*, f32, f32);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_80889FB0_jp.s")
+void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1*, f32, f32);
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_character.s")
 #endif
 
 void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2) {
@@ -505,7 +503,7 @@ void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg
     mBD_set_frame_dl(gfxCtx, arg2, sp30, sp2C, submenu->unk_2C->unk_106E4);
     if ((arg2->unk_38 == 1) || (submenu->unk_2C->unk_106E4->unk_04 == 0)) {
         submenu->unk_2C->setCharMatrix(gfxCtx);
-        func_80889FB0_jp(submenu, game_play, arg2, sp30, sp2C);
+        mBD_set_character(submenu, game_play, arg2, sp30, sp2C);
     }
 }
 
@@ -530,7 +528,7 @@ extern u8 D_8088ABB8_jp;
 extern u8 D_8088ABBC_jp;
 
 // regalloc
-void func_8088A2D0_jp(Submenu* arg0) {
+void mBD_board_ovl_init(Submenu* arg0) {
     struct_mSM_move_Move_arg1* temp_v1 = &arg0->unk_2C->unk_103E8; // sp5C
     struct_8085E9B0_unk_106E4* temp_s0 = arg0->unk_2C->unk_106E4;
 
@@ -617,7 +615,7 @@ void func_8088A2D0_jp(Submenu* arg0) {
 }
 #else
 // mBD_board_ovl_init
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/func_8088A2D0_jp.s")
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_board_ovl_init.s")
 #endif
 
 extern uintptr_t D_8088A9A0_jp[];
@@ -642,7 +640,7 @@ void func_8088A604_jp(Submenu* submenu) {
     temp_v0->unk_BC = temp_v0->unk_BC - (uintptr_t)&D_C000000_;
 }
 
-//? func_8088A2D0_jp(Submenu*);                       /* extern */
+//? mBD_board_ovl_init(Submenu*);                       /* extern */
 
 // board_ovl_data
 extern struct_8085E9B0_unk_106E4 B_8088AC00_jp;
@@ -659,7 +657,7 @@ void mBD_board_ovl_construct(Submenu* submenu) {
         temp_v1->unk_106E4 = &B_8088AC00_jp;
     }
 
-    func_8088A2D0_jp(submenu);
+    mBD_board_ovl_init(submenu);
     mBD_board_ovl_set_proc(submenu);
     func_8088A604_jp(submenu);
 }
