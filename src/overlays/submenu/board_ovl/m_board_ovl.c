@@ -436,26 +436,30 @@ void mBD_set_writing_header(Submenu* submenu, Game_Play* game_play, struct_mSM_m
 
 extern struct_8088AAA4_jp D_8088AAA4_jp[];
 
-#if 0
+#ifdef NON_MATCHING
+// stack
 void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4) {
-    f32 sp40;
+    s32 temp = submenu->unk_2C->unk_106E4->unk_08.unk_29;
+    f32 temp_ft2; // sp40
     f32 sp3C;
     f32 sp38;
-    UNK_TYPE4* temp_v1; // sp34
+    struct_8088AAA4_jp* temp_v1; // sp34
     f32 temp_fv0; // sp30
-    f32 temp_ft2;
 
-    temp_fv0 = 64.0f + arg3;
+    temp_v1 = &D_8088AAA4_jp[temp];
     temp_ft2 = 36.0f - arg4;
-    temp_v1 = &D_8088AAA4_jp[submenu->unk_2C->unk_106E4->unk_08.unk_29];
-    sp40 = temp_ft2;
+    temp_fv0 = 64.0f + arg3;
+
     mBD_set_writing_header(submenu, game_play, arg2, temp_fv0, temp_ft2, temp_v1);
-    sp40 = sp40 + 28.0f;
+
+    temp_ft2 = temp_ft2 + 28.0f;
     sp3C = temp_fv0 - 160.0f;
-    sp38 = 120.0f - sp40;
-    mBD_set_writing_body(submenu, arg2, game_play, temp_fv0, &sp40, &sp3C, &sp38, temp_v1);
-    sp40 = sp40 + 12.0f;
-    mBD_set_writing_footer(submenu, game_play, temp_fv0, sp40, temp_v1);
+    sp38 = 120.0f - temp_ft2;
+    mBD_set_writing_body(submenu, arg2, game_play, temp_fv0, &temp_ft2, &sp3C, &sp38, temp_v1);
+
+    temp_ft2 = temp_ft2 + 12.0f;
+    mBD_set_writing_footer(submenu, game_play, temp_fv0, temp_ft2, temp_v1);
+
     if ((arg2->unk_04 == 1) && (submenu->unk_2C->unk_106E0 != NULL)) {
         mBD_set_cursol(submenu, game_play, arg3, arg4);
         submenu->unk_2C->unk_106E0->unk_28(submenu, game_play, sp3C, sp38);
@@ -618,23 +622,20 @@ extern struct_8085E9B0_unk_106E4 B_8088AC00_jp;
 
 extern struct_func_8085D43C_jp_arg2 D_8088ABC0_jp;
 
-#ifdef NON_EQUIVALENT
 void mBD_board_ovl_construct(Submenu* submenu) {
-    struct_8085E9B0* temp_v1;
+    struct_8085E9B0* temp_v1 = submenu->unk_2C;
 
-    temp_v1 = submenu->unk_2C;
-    if (temp_v1->unk_106E4 == NULL) {
-        temp_v1->unk_106CC(submenu, (void** ) &temp_v1->unk_100D0[0x340], &D_8088ABC0_jp);
+    if (submenu->unk_2C->unk_106E4 == NULL) {
+        temp_v1->unk_106CC(submenu, &temp_v1->unk_103E8.unk_28, &D_8088ABC0_jp);
         temp_v1->unk_106E4 = &B_8088AC00_jp;
+
+        if (temp_v1 && temp_v1) {}
     }
 
     mBD_board_ovl_init(submenu);
     mBD_board_ovl_set_proc(submenu);
     func_8088A604_jp(submenu);
 }
-#else
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_board_ovl_construct.s")
-#endif
 
 void mBD_board_ovl_destruct(Submenu* submenu) {
     submenu->unk_2C->unk_106E4 = NULL;
