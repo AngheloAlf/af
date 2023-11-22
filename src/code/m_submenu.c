@@ -344,11 +344,11 @@ void mSM_open_submenu(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s3
     mSM_open_submenu_new2(submenu, programId, arg2, arg3, 0, 0);
 }
 
-void mSM_open_submenu_new(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, s32 arg4) {
+void mSM_open_submenu_new(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, char* arg4) {
     mSM_open_submenu_new2(submenu, programId, arg2, arg3, arg4, 0);
 }
 
-void mSM_open_submenu_new2(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+void mSM_open_submenu_new2(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, char* arg4, s32 arg5) {
     submenu->programId = programId;
     submenu->unk_10 = arg2;
     submenu->unk_14 = arg3;

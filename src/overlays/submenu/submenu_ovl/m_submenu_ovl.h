@@ -85,7 +85,7 @@ typedef struct struct_8085E9B0_unk_10088 {
     /* 0x28 */ UNK_TYPE1 unk_28[0x10];
     /* 0x38 */ UNK_TYPE4 unk_38;
     /* 0x3C */ UNK_TYPE4 unk_3C;
-    /* 0x40 */ UNK_TYPE4 unk_40;
+    /* 0x40 */ char* unk_40;
     /* 0x44 */ UNK_TYPE4 unk_44;
 } struct_8085E9B0_unk_10088; // size = 0x48
 
@@ -163,9 +163,11 @@ typedef void (*struct_8085E9B0_unk_106C4)(struct GraphicsContext*, f32, f32, f32
 typedef void (*struct_8085E9B0_unk_106C8)(struct Submenu*, struct GraphicsContext*, s32);
 typedef void (*struct_8085E9B0_unk_106CC)(struct Submenu*, void**, struct_func_8085D43C_jp_arg2*);
 
+typedef void (*struct_8085E9B0_unk_106D0_unk_10C)(struct Submenu*);
+
 typedef struct struct_8085E9B0_unk_106D0 {
     /* 0x000 */ UNK_TYPE1 unk_000[0x10C];
-    /* 0x10C */ UNK_FUN_PTR unk_10C;
+    /* 0x10C */ struct_8085E9B0_unk_106D0_unk_10C unk_10C;
 } struct_8085E9B0_unk_106D0; // size >= 0x110
 
 typedef struct struct_8085E9B0 {

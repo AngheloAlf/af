@@ -149,25 +149,25 @@ void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
         if (temp_v1->unk_3C == 0) {
             sp50 = &common_data.privateInfo->unk_3EE;
             mMl_copy_mail(temp_s0->unk_AC, &temp_s0->unk_08);
-            temp_v0_3 = mMl_strlen(&temp_s0->unk_08.unk_2A.unk_6A, 0x10, 0x20);
+            temp_v0_3 = mMl_strlen(temp_s0->unk_08.unk_2A.unk_6A, 0x10, 0x20);
             sp48 = temp_s0->unk_07 - temp_v0_3;
-            mem_copy(&sp2C, (u8* ) &temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
+            mem_copy((u8*)sp2C, (u8*)temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
 
-            for (var_a3 = &sp2C, var_v0 = 0; var_v0 < temp_v0_3; var_v0++) {
+            for (var_a3 = sp2C, var_v0 = 0; var_v0 < temp_v0_3; var_v0++) {
                 if (*var_a3 != 0x20) {
                     break;
                 }
                 var_a3 += 1;
             }
 
-            mem_clear(&temp_s0->unk_AC->unk_2A.unk_6A, 0x10U, 0x20U);
+            mem_clear((u8*)temp_s0->unk_AC->unk_2A.unk_6A, 0x10U, 0x20U);
             if (sp48 < 0x10) {
-                mem_copy(&temp_s0->unk_AC->unk_2A.unk_6A[sp48], var_a3, temp_v0_3 - var_v0);
+                mem_copy((u8*)&temp_s0->unk_AC->unk_2A.unk_6A[sp48], (u8*)var_a3, temp_v0_3 - var_v0);
             }
 
             sp50->unk_00 = temp_s0->unk_08.unk_27;
-            mem_copy(sp50->unk_02, temp_s0->unk_AC->unk_2A.unk_00, 0xAU);
-            mem_copy(sp50->unk_0C, temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
+            mem_copy((u8*)sp50->unk_02, (u8*)temp_s0->unk_AC->unk_2A.unk_00, 0xAU);
+            mem_copy((u8*)sp50->unk_0C, (u8*)temp_s0->unk_AC->unk_2A.unk_6A, 0x10U);
 
             if (arg1->unk_3C != -1) {
                 mPr_SetPossessionItem(common_data.privateInfo, arg1->unk_3C, 0U, 0U);
@@ -176,7 +176,7 @@ void mBD_move_Obey(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
 
             mBD_end_board(submenu, arg1);
         } else if (temp_v1->unk_3C == 1) {
-            mSM_open_submenu_new(submenu, SUBMENU_PROGRAM_10, 0, 0, &temp_s0->unk_08.unk_2A.unk_0A);
+            mSM_open_submenu_new(submenu, SUBMENU_PROGRAM_10, 0, 0, temp_s0->unk_08.unk_2A.unk_0A);
             temp_s0->unk_00 = 1;
             temp_s0->unk_02 = 0;
             arg1->unk_04 = 1;
@@ -268,7 +268,7 @@ void mBD_set_point(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) {
     OPEN_DISPS(gfxCtx);
     {
         Gfx* gfx = POLY_OPA_DISP;
-        s32 pad;
+        s32 pad UNUSED;
 
         gSPMatrix(gfx++, _Matrix_to_Mtx_new(gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPDisplayList(gfx++, D_C000120);
@@ -325,7 +325,7 @@ void mBD_set_writing_footer(Submenu* submenu, Game_Play* game_play, f32 arg2, f3
     struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
 
     arg2 += 12.0f * (0x10 - temp_v0->unk_07);
-    func_80090E98_jp(game_play, &temp_v0->unk_08.unk_2A.unk_6A, temp_v0->unk_07, arg2, arg3, arg4->unk_0, arg4->unk_1, arg4->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
+    func_80090E98_jp(game_play, temp_v0->unk_08.unk_2A.unk_6A, temp_v0->unk_07, arg2, arg3, arg4->unk_0, arg4->unk_1, arg4->unk_2, 0xFF, 0, 0, 1.0f, 1.0f, 0);
 }
 
 #ifdef NON_EQUIVALENT
@@ -524,20 +524,20 @@ void mBD_board_ovl_init(Submenu* arg0) {
 
         temp_s0->unk_04 = 1;
         temp_v1->unk_30 = 1;
-        mSM_open_submenu_new(arg0, SUBMENU_PROGRAM_13, 0, 0, (s32) &temp_s0->unk_08.unk_2A.unk_0A);
+        mSM_open_submenu_new(arg0, SUBMENU_PROGRAM_13, 0, 0, temp_s0->unk_08.unk_2A.unk_0A);
         mMl_init_mail(&temp_s0->unk_08, &common_data.privateInfo->unk_000);
 
         temp_s0->unk_08.unk_29 = common_data.privateInfo->inventory.pockets[temp_v1->unk_3C] - 0x2000;
 
         if (sp54->unk_00 == -1) {
             sp50 = mMl_strlen(common_data.privateInfo->unk_000.unk_0.unk_0, 6, 0x20);
-            mem_copy(&temp_s0->unk_08.unk_2A.unk_00, &D_8088ABB8_jp, 3U);
-            mem_copy(&temp_s0->unk_08.unk_2A.unk_6A, (u8* ) common_data.privateInfo, (u32) sp50);
-            mem_copy(&temp_s0->unk_08.unk_2A.unk_6A[sp50], &D_8088ABBC_jp, 2U);
+            mem_copy((u8*)temp_s0->unk_08.unk_2A.unk_00, (u8*)&D_8088ABB8_jp, 3U);
+            mem_copy((u8*)temp_s0->unk_08.unk_2A.unk_6A, (u8* ) common_data.privateInfo, (u32) sp50);
+            mem_copy((u8*)&temp_s0->unk_08.unk_2A.unk_6A[sp50], (u8*)&D_8088ABBC_jp, 2U);
             temp_s0->unk_08.unk_27 = 0;
         } else {
-            mem_copy(&temp_s0->unk_08.unk_2A.unk_00, sp54->unk_02, 0xAU);
-            mem_copy(&temp_s0->unk_08.unk_2A.unk_6A, sp54->unk_0C, 0x10U);
+            mem_copy((u8*)temp_s0->unk_08.unk_2A.unk_00, (u8*)sp54->unk_02, 0xAU);
+            mem_copy((u8*)temp_s0->unk_08.unk_2A.unk_6A, (u8*)sp54->unk_0C, 0x10U);
 
             //! FAKE: & 0xFF
             //temp_s0->unk_08.unk_27 = sp54->unk_00 & 0xFF;
@@ -549,15 +549,15 @@ void mBD_board_ovl_init(Submenu* arg0) {
             temp_v1->unk_30 = 2;
         } else {
             temp_v1->unk_30 = 1;
-            mSM_open_submenu_new(arg0, SUBMENU_PROGRAM_13, 1, 0, (s32) &temp_s0->unk_08.unk_2A.unk_0A);
+            mSM_open_submenu_new(arg0, SUBMENU_PROGRAM_13, 1, 0, temp_s0->unk_08.unk_2A.unk_0A);
         }
         temp_s0->unk_04 = 0;
         temp_s0->unk_03 = mMl_strlen(temp_s0->unk_08.unk_00.unk_00.unk_0.unk_0, 6, 0x20);
     }
 
-    temp_s0->unk_05 = mMl_strlen(&temp_s0->unk_08.unk_2A.unk_00, 0xA, 0x20);
-    temp_s0->unk_07 = mMl_strlen(&temp_s0->unk_08.unk_2A.unk_6A, 0x10, 0x20);
-    temp_s0->unk_06 = mMl_strlen(&temp_s0->unk_08.unk_2A.unk_0A, 0x60, 0x20);
+    temp_s0->unk_05 = mMl_strlen(temp_s0->unk_08.unk_2A.unk_00, 0xA, 0x20);
+    temp_s0->unk_07 = mMl_strlen(temp_s0->unk_08.unk_2A.unk_6A, 0x10, 0x20);
+    temp_s0->unk_06 = mMl_strlen(temp_s0->unk_08.unk_2A.unk_0A, 0x60, 0x20);
 
     if (temp_s0->unk_08.unk_27 > 0xA) {
         temp_s0->unk_08.unk_27 = 0xA;
@@ -575,7 +575,7 @@ void mBD_board_ovl_init(Submenu* arg0) {
 
         var_a3 = sp34;
 
-        mem_copy(sp34, &temp_s0->unk_08.unk_2A.unk_6A, 0x10U);
+        mem_copy((u8*)sp34, (u8*)temp_s0->unk_08.unk_2A.unk_6A, 0x10U);
 
         for (var_v0 = 0; var_v0 < temp_s0->unk_07; var_v0++) {
             if (*var_a3 != 0x20) {
@@ -584,12 +584,12 @@ void mBD_board_ovl_init(Submenu* arg0) {
             var_a3 += 1;
         }
 
-        mem_clear(&temp_s0->unk_08.unk_2A.unk_6A, 0x10U, 0x20U);
-        mem_copy(&temp_s0->unk_08.unk_2A.unk_6A, var_a3, temp_s0->unk_07 - var_v0);
+        mem_clear((u8*)temp_s0->unk_08.unk_2A.unk_6A, 0x10U, 0x20U);
+        mem_copy((u8*)temp_s0->unk_08.unk_2A.unk_6A, (u8*)var_a3, temp_s0->unk_07 - var_v0);
     }
 }
 #else
-// mBD_board_ovl_init
+void mBD_board_ovl_init(Submenu* submenu);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_board_ovl_init.s")
 #endif
 
@@ -607,15 +607,13 @@ void func_8088A604_jp(Submenu* submenu) {
     vram = temp_v0->unk_B8;
     if (vram == NULL) {
         temp_v0->unk_B8 = submenu->unk_2C->unk_10000.unk_00;
-        submenu->unk_2C->unk_10000.unk_00 = (uintptr_t)submenu->unk_2C->unk_10000.unk_00 + 0x1400;
+        submenu->unk_2C->unk_10000.unk_00 = (void*)((uintptr_t)submenu->unk_2C->unk_10000.unk_00 + 0x1400);
     }
     vram = temp_v0->unk_B8;
 
     DmaMgr_RequestSyncDebug(vram, temp + temp_v0->unk_BC - (uintptr_t)&D_C000000, D_8088A9A0_jp[temp_v0->unk_08.unk_29+1] - temp_v0->unk_BC, "../m_board_ovl.c", 1228);
     temp_v0->unk_BC = temp_v0->unk_BC - (uintptr_t)&D_C000000_;
 }
-
-//? mBD_board_ovl_init(Submenu*);                       /* extern */
 
 // board_ovl_data
 extern struct_8085E9B0_unk_106E4 B_8088AC00_jp;

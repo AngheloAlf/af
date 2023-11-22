@@ -11,7 +11,7 @@ struct LandInfo;
 struct MotherMailInfo;
 
 typedef struct PlayerName {
-    /* 0x0 */ UNK_TYPE1 unk_0[0x6];
+    /* 0x0 */ char unk_0[6];
 } PlayerName; // size = 0x6
 
 typedef struct PersonalID {

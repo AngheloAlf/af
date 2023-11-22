@@ -76,7 +76,7 @@ typedef struct Submenu {
     /* 0x0C */ mSMMoveProcIndex moveProcIndex;
     /* 0x10 */ s32 unk_10;
     /* 0x14 */ s32 unk_14;
-    /* 0x18 */ s32 unk_18;
+    /* 0x18 */ char* unk_18;
     /* 0x1C */ s32 unk_1C;
     /* 0x20 */ s32 unk_20;
     /* 0x24 */ void* linkedAllocStart;
@@ -107,8 +107,8 @@ void mSM_submenu_ct(Submenu* submenu);
 void mSM_submenu_dt(Submenu* submenu);
 
 void mSM_open_submenu(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3);
-void mSM_open_submenu_new(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, s32 arg4);
-void mSM_open_submenu_new2(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void mSM_open_submenu_new(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, char* arg4);
+void mSM_open_submenu_new2(Submenu* submenu, SubmenuProgramId programId, s32 arg2, s32 arg3, char* arg4, s32 arg5);
 
 void mSM_submenu_ctrl(struct Game_Play* game_play);
 void mSM_submenu_move(Submenu* submenu);
