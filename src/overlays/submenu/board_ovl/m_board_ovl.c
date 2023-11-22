@@ -450,15 +450,13 @@ void mBD_set_writing_header(Submenu* submenu, Game_Play* game_play, struct_mSM_m
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_writing_header.s")
 #endif
 
-#ifdef NON_MATCHING
-// stack
 void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4) {
+    f32 temp_fv0;
     s32 temp = submenu->unk_2C->unk_106E4->unk_08.unk_29;
-    f32 temp_ft2; // sp40
+    struct_8088AAA4_jp* temp_v1;
+    f32 temp_ft2;
     f32 sp3C;
     f32 sp38;
-    struct_8088AAA4_jp* temp_v1; // sp34
-    f32 temp_fv0; // sp30
 
     temp_v1 = &D_8088AAA4_jp[temp];
     temp_ft2 = 36.0f - arg4;
@@ -479,10 +477,6 @@ void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_M
         submenu->unk_2C->unk_106E0->unk_28(submenu, game_play, sp3C, sp38);
     }
 }
-#else
-void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1*, f32, f32);
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_character.s")
-#endif
 
 void mBD_set_dl(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
