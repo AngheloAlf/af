@@ -12,13 +12,50 @@
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/submenu/submenu_ovl/m_submenu_ovl.h"
 
-extern Gfx* D_8088A7A0_jp[]; // lbl_806c7c60
-extern Gfx* D_8088A8A0_jp[]; // lbl_806c8060
 extern Gfx D_C000120[]; // lat_letter_mode
 extern Gfx D_C000158[]; // lat_letter_sen_mode
 
 extern Gfx D_C000040[]; // lat_hani_senT_model
 extern Gfx D_C0001C0[]; // lat_point_mT_model
+
+
+extern UNK_TYPE D_C000000;
+extern UNK_TYPE D_C000000_;
+
+typedef struct struct_8088AAA4_jp {
+    /* 0x0 */ u8 unk_0;
+    /* 0x1 */ u8 unk_1;
+    /* 0x2 */ u8 unk_2;
+    /* 0x3 */ u8 unk_3;
+} struct_8088AAA4_jp; // size = 0x4
+
+
+typedef void (*struct_8088ABA4_jp)(Submenu* submenu, struct_mSM_move_Move_arg1*);
+
+extern Gfx* D_8088A7A0_jp[]; // lbl_806c7c60
+extern Gfx* D_8088A8A0_jp[]; // lbl_806c8060
+extern uintptr_t D_8088A9A0_jp[]; // TODO: type
+extern struct_8088AAA4_jp D_8088AAA4_jp[];
+
+extern struct_8088ABA4_jp ovl_move_proc_573[];
+
+#if 0
+struct_8088ABA4_jp ovl_move_proc_573[] = {
+    mBD_move_Move,
+    mBD_move_Play,
+    mBD_move_Wait,
+    mBD_move_Obey,
+    mBD_move_End,
+};
+#endif
+
+extern char D_8088ABB8_jp[];
+extern char D_8088ABBC_jp[];
+
+extern struct_func_8085D43C_jp_arg2 D_8088ABC0_jp;
+
+// board_ovl_data
+extern struct_8085E9B0_unk_106E4 B_8088AC00_jp;
 
 void mBD_roll_control(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     struct_8085E9B0_unk_106E0* temp_t0 = submenu->unk_2C->unk_106E0;
@@ -196,20 +233,6 @@ void mBD_move_End(Submenu* submenu, struct_mSM_move_Move_arg1* arg1) {
     submenu->unk_2C->moveEnd(submenu, arg1);
 }
 
-typedef void (*struct_8088ABA4_jp)(Submenu* submenu, struct_mSM_move_Move_arg1*);
-
-extern struct_8088ABA4_jp ovl_move_proc_573[];
-
-#if 0
-struct_8088ABA4_jp ovl_move_proc_573[] = {
-    mBD_move_Move,
-    mBD_move_Play,
-    mBD_move_Wait,
-    mBD_move_Obey,
-    mBD_move_End,
-};
-#endif
-
 void mBD_board_ovl_move(Submenu* submenu) {
     struct_mSM_move_Move_arg1* temp_a1 = &submenu->unk_2C->unk_103E8;
 
@@ -313,13 +336,6 @@ void mBD_set_cursol(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3) 
 
     submenu->unk_2C->unk_106E0->unk_2C(submenu, game_play, 64.0f + arg2 + (var_fv0 * 12.0f), 36.0f - ((arg3 - (var_fv1 * 16.0f)) - var_fa0));
 }
-
-typedef struct struct_8088AAA4_jp {
-    /* 0x0 */ u8 unk_0;
-    /* 0x1 */ u8 unk_1;
-    /* 0x2 */ u8 unk_2;
-    /* 0x3 */ u8 unk_3;
-} struct_8088AAA4_jp; // size = 0x4
 
 void mBD_set_writing_footer(Submenu* submenu, Game_Play* game_play, f32 arg2, f32 arg3, struct_8088AAA4_jp* arg4) {
     struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
@@ -434,8 +450,6 @@ void mBD_set_writing_header(Submenu* submenu, Game_Play* game_play, struct_mSM_m
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_set_writing_header.s")
 #endif
 
-extern struct_8088AAA4_jp D_8088AAA4_jp[];
-
 #ifdef NON_MATCHING
 // stack
 void mBD_set_character(Submenu* submenu, Game_Play* game_play, struct_mSM_move_Move_arg1* arg2, f32 arg3, f32 arg4) {
@@ -499,8 +513,6 @@ void mBD_board_ovl_set_proc(Submenu* submenu) {
 }
 
 #ifdef NON_MATCHING
-extern u8 D_8088ABB8_jp;
-extern u8 D_8088ABBC_jp;
 
 // regalloc
 void mBD_board_ovl_init(Submenu* arg0) {
@@ -593,10 +605,6 @@ void mBD_board_ovl_init(Submenu* submenu);
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/submenu/board_ovl/m_board_ovl/mBD_board_ovl_init.s")
 #endif
 
-extern uintptr_t D_8088A9A0_jp[];
-extern UNK_TYPE D_C000000;
-extern UNK_TYPE D_C000000_;
-
 void func_8088A604_jp(Submenu* submenu) {
     struct_8085E9B0_unk_106E4* temp_v0 = submenu->unk_2C->unk_106E4;
     RomOffset temp = SEGMENT_ROM_START(segment_00AE3000);
@@ -614,11 +622,6 @@ void func_8088A604_jp(Submenu* submenu) {
     DmaMgr_RequestSyncDebug(vram, temp + temp_v0->unk_BC - (uintptr_t)&D_C000000, D_8088A9A0_jp[temp_v0->unk_08.unk_29+1] - temp_v0->unk_BC, "../m_board_ovl.c", 1228);
     temp_v0->unk_BC = temp_v0->unk_BC - (uintptr_t)&D_C000000_;
 }
-
-// board_ovl_data
-extern struct_8085E9B0_unk_106E4 B_8088AC00_jp;
-
-extern struct_func_8085D43C_jp_arg2 D_8088ABC0_jp;
 
 void mBD_board_ovl_construct(Submenu* submenu) {
     struct_8085E9B0* temp_v1 = submenu->unk_2C;
