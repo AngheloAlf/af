@@ -4162,7 +4162,9 @@ func_800FD0D4_jp = 0x800FD0D4; // type:func
 func_800FD13C_jp = 0x800FD13C; // type:func
 Na_FurnitureInst = 0x800FD170; // type:func
 func_800FD280_jp = 0x800FD280; // type:func
-D_800FD2D0_jp = 0x800FD2D0; //
+
+aspMainTextStart = 0x800FD2D0; // name_end:aspMainTextEnd
+
 func_800FE220_jp = 0x800FE220; // type:func
 func_800FE420_jp = 0x800FE420; // type:func
 func_800FE480_jp = 0x800FE480; // type:func
@@ -5145,7 +5147,9 @@ D_801143BC_jp = 0x801143BC; //
 D_801143C0_jp = 0x801143C0; //
 D_801143D0_jp = 0x801143D0; //
 D_801143E8_jp = 0x801143E8; //
-D_80114420_jp = 0x80114420; //
+
+aspMainDataStart = 0x80114420; // name_end:aspMainDataEnd
+
 D_80114700_jp = 0x80114700; //
 D_80115020_jp = 0x80115020; //
 D_80115090_jp = 0x80115090; // type:s16

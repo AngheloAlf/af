@@ -128,7 +128,9 @@
       - [0x7205C0, asm, code/7205C0]
       - [0x7206E0, asm, code/7206E0]
       - [0x720B20, asm, code/720B20]
-      - [0x720F70, asm, code/720F70]
+
+      - [0x720F70, textbin, rsp/aspMain]
+
       - [0x721EC0, asm, code/721EC0]
       - [0x7220C0, asm, code/7220C0]
       - [0x722310, asm, code/722310]
@@ -190,6 +192,10 @@
       - [0x7339F0, .data, code/sys_ucode]
       - [0x733A00, .data, code/zurumode]
       - [0x733A10, data, code/733A10]
+
+      - [0x7380C0, databin, rsp/aspMain]
+
+      - [0x7383A0, data, code/7383A0]
 
       - [0x739DB0, .rodata, code/c_keyframe]
       - [0x739E00, .rodata, code/m_all_grow]

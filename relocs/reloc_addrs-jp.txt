@@ -57,6 +57,9 @@ rom:0x6F6594 symbol:segment_027130_ROM_START reloc:MIPS_LO16
 rom:0x6F658C symbol:segment_027130_ROM_END reloc:MIPS_HI16
 rom:0x6F6590 symbol:segment_027130_ROM_END reloc:MIPS_LO16
 
+rom:0x712330 symbol:aspMainDataEnd reloc:MIPS_HI16
+rom:0x712334 symbol:aspMainDataEnd reloc:MIPS_LO16
+
 
 // overlays
 
